@@ -1,35 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import './AddItem.css';
 
-function AddItem({ addItemToCart }) {
-  const [barcode, setBarcode] = useState('');
-  const [itemDetails, setItemDetails] = useState({ name: '', price: '', quantity: 1 });
+const AddItem = ({ addItemToCart }) => {
   const [scanning, setScanning] = useState(false);
-  const navigate = useNavigate();
+  const [barcode, setBarcode] = useState(null);
+  const [itemDetails, setItemDetails] = useState({});
   const scannerRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (scanning && !scannerRef.current) {
+    if (scanning) {
+      // Initialize the scanner
       scannerRef.current = new Html5QrcodeScanner(
         "reader",
         { fps: 10, qrbox: 250 },
         false
       );
-
-      scannerRef.current.render(
-        (decodedText) => {
-          setBarcode(decodedText);
-          setScanning(false);
-          scannerRef.current.clear();
-          scannerRef.current = null;
-          handleBarcodeScanned(decodedText);
-        },
-        (error) => {
-          console.warn(error);
-        }
-      );
+      scannerRef.current.render(handleBarcodeScanned);
     }
 
     return () => {
@@ -40,16 +28,17 @@ function AddItem({ addItemToCart }) {
     };
   }, [scanning]);
 
-  const handleBarcodeScanned = async (barcode) => {
+  const handleBarcodeScanned = async (decodedText, decodedResult) => {
     // Simulate fetching product details based on barcode
     // Replace this with actual API call
-    const productDetails = await fetchProductDetails(barcode);
+    const productDetails = await fetchProductDetails(decodedText);
     setItemDetails({ ...productDetails, quantity: 1 });
+    setBarcode(decodedText);
+    setScanning(false); // Stop scanning after barcode is detected
   };
 
   const fetchProductDetails = async (barcode) => {
     // Simulate an API call to fetch product details
-    // Replace this with actual API call
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({ name: 'Sample Item', price: 100 });
@@ -69,41 +58,50 @@ function AddItem({ addItemToCart }) {
 
   return (
     <div>
-      <h1>Scan Barcode</h1>
-      <button onClick={() => setScanning(true)}>Scan Barcode</button>
-      {scanning && <div id="reader" style={{ width: '300px', height: '300px' }}></div>}
+      <div>
+        <h1>Scan Barcode</h1>
+        <div id="reader" style={{ width: '100%' }}></div>
+        {!scanning && <button onClick={() => setScanning(true)}>Start Scanning</button>}
+        {barcode && <p>Scanned QR Code: {barcode}</p>}
+      </div>
       {barcode && (
         <div>
           <h2>Item Details</h2>
-          <input
-            type="text"
-            name="name"
-            placeholder="Item Name"
-            value={itemDetails.name}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={itemDetails.price}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <input
-            type="number"
-            name="quantity"
-            placeholder="Quantity"
-            value={itemDetails.quantity}
-            onChange={handleInputChange}
-          />
-          <button onClick={handleAddItem}>Add Item</button>
-          <h1>hi</h1>
+          <div>
+            <label htmlFor="name">Item Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={itemDetails.name || ''}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="price">Item Price</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={itemDetails.price || ''}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={itemDetails.quantity || ''}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button onClick={handleAddItem}>Add to Cart</button>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default AddItem;
