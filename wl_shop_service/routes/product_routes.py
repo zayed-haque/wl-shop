@@ -24,7 +24,7 @@ def get_products():
 @product_bp.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = ProductService.get_product_by_id(product_id)
-    return product_schema.jsonify(product), 200
+    return jsonify(product_schema.dump(product)), 200
 
 
 @product_bp.route('/products', methods=['POST'])
@@ -39,7 +39,7 @@ def create_product():
     except ValueError as e:
         return jsonify({'message': str(e)}), 400
 
-    return product_schema.jsonify(new_product), 201
+    return jsonify(product_schema.dump(new_product)), 201
 
 
 @product_bp.route('/products/<int:product_id>', methods=['PUT'])
@@ -50,7 +50,7 @@ def update_product(product_id):
         return jsonify(err.messages), 400
 
     updated_product = ProductService.update_product(product_id, product_data)
-    return product_schema.jsonify(updated_product), 200
+    return jsonify(product_schema.dump(updated_product)), 200
 
 
 @product_bp.route('/products/<int:product_id>', methods=['DELETE'])
@@ -76,7 +76,7 @@ def search_products():
 @product_bp.route('/categories', methods=['GET'])
 def get_categories():
     categories = ProductService.get_all_categories()
-    return categories_schema.jsonify(categories), 200
+    return jsonify(categories_schema.dump(categories)), 200
 
 
 @product_bp.route('/categories', methods=['POST'])
@@ -87,4 +87,6 @@ def create_category():
         return jsonify(err.messages), 400
 
     new_category = ProductService.create_category(category_data['name'])
-    return category_schema.jsonify(new_category), 201
+
+    result = category_schema.dump(new_category)
+    return jsonify(result), 201
