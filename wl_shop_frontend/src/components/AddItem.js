@@ -1,24 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QrReader from 'react-qr-barcode-scanner';
+import { Html5QrcodeScanner } from 'html5-qrcode';
+import './AddItem.css';
 
 function AddItem({ addItemToCart }) {
   const [barcode, setBarcode] = useState('');
   const [itemDetails, setItemDetails] = useState({ name: '', price: '', quantity: 1 });
-  const [data, setData] = useState('No result');
+  const [scanning, setScanning] = useState(false);
   const navigate = useNavigate();
+  const scannerRef = useRef(null);
 
-  const handleScan = (result) => {
-    if (result) {
-      setData(result.text);
-      setBarcode(result.text);
-      // Fetch item details based on barcode (simulated here)
-      setItemDetails({ name: 'Sample Item', price: 100, quantity: 1 });
+  useEffect(() => {
+    if (scanning && !scannerRef.current) {
+      scannerRef.current = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: 250 },
+        false
+      );
+
+      scannerRef.current.render(
+        (decodedText) => {
+          setBarcode(decodedText);
+          setScanning(false);
+          scannerRef.current.clear();
+          scannerRef.current = null;
+          handleBarcodeScanned(decodedText);
+        },
+        (error) => {
+          console.warn(error);
+        }
+      );
     }
+
+    return () => {
+      if (scannerRef.current) {
+        scannerRef.current.clear();
+        scannerRef.current = null;
+      }
+    };
+  }, [scanning]);
+
+  const handleBarcodeScanned = async (barcode) => {
+    // Simulate fetching product details based on barcode
+    // Replace this with actual API call
+    const productDetails = await fetchProductDetails(barcode);
+    setItemDetails({ ...productDetails, quantity: 1 });
   };
 
-  const handleError = (err) => {
-    console.error(err);
+  const fetchProductDetails = async (barcode) => {
+    // Simulate an API call to fetch product details
+    // Replace this with actual API call
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ name: 'Sample Item', price: 100 });
+      }, 1000);
+    });
   };
 
   const handleInputChange = (e) => {
@@ -33,18 +69,9 @@ function AddItem({ addItemToCart }) {
 
   return (
     <div>
-      <div>
-        <h1>Scan Barcode</h1>
-        <QrReader
-          delay={300}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: '100%' }}
-          facingMode="environment"  // This selects the back camera on mobile devices.
-        />
-
-        <p>{data}</p>
-      </div>
+      <h1>Scan Barcode</h1>
+      <button onClick={() => setScanning(true)}>Scan Barcode</button>
+      {scanning && <div id="reader" style={{ width: '300px', height: '300px' }}></div>}
       {barcode && (
         <div>
           <h2>Item Details</h2>
