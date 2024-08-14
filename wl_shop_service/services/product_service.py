@@ -39,7 +39,9 @@ class ProductService:
 
     @staticmethod
     def search_products(query, page=1, per_page=20):
-        return Product.query.filter(Product.name.ilike(f"%{query}%")).paginate(page=page, per_page=per_page, error_out=False)
+        return Product.query.filter(Product.name.ilike(f"%{query}%")).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
 
     @staticmethod
     def get_all_categories():

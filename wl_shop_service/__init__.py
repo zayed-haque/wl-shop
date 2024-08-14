@@ -11,7 +11,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object('config.Config')
+    app.config.from_object("config.Config")
 
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://localhost/wl_shop_db')
     # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,6 +21,7 @@ def create_app():
     migrate.init_app(app, db)
 
     from wl_shop_service.routes.product_routes import product_bp
-    app.register_blueprint(product_bp, url_prefix='/api')
+
+    app.register_blueprint(product_bp, url_prefix="/api")
 
     return app

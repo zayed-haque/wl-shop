@@ -31,13 +31,17 @@ class CartService:
 
     @staticmethod
     def update_cart_item(cart_id, product_id, quantity):
-        cart_item = CartItem.query.filter_by(cart_id=cart_id, product_id=product_id).first()
+        cart_item = CartItem.query.filter_by(
+            cart_id=cart_id, product_id=product_id
+        ).first()
         cart_item.quantity = quantity
         db.session.commit()
         return cart_item
 
     @staticmethod
     def delete_cart_item(cart_id, product_id):
-        cart_item = CartItem.query.filter_by(cart_id=cart_id, product_id=product_id).first()
+        cart_item = CartItem.query.filter_by(
+            cart_id=cart_id, product_id=product_id
+        ).first()
         db.session.delete(cart_item)
         db.session.commit()
