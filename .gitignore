@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # React Packages
-wl-shop-frontend/node_modules/
+wl_shop_frontend/node_modules/
 
 # Distribution / packaging
 .Python
