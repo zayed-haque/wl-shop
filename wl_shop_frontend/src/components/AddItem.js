@@ -99,6 +99,7 @@ function AddItem({ addItemToCart }) {
             onChange={handleInputChange}
           />
           <button onClick={handleAddItem}>Add Item</button>
+          <h1>hi</h1>
         </div>
       )}
     </div>
