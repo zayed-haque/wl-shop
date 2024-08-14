@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CartItems from './CartItems';
-import ShippingOptions from './ShippingOptions';
+// import ShippingOptions from './ShippingOptions';
 import OrderSummary from './OrderSummary';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,30 +54,6 @@ function Cart() {
   return (
     <div className="cart-container">
       <h1>My Cart</h1>
-      <form onSubmit={handleAddItem}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Item Name"
-          value={newItem.name}
-          onChange={handleInputChange}
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={newItem.price}
-          onChange={handleInputChange}
-        />
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          value={newItem.quantity}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Add Item</button>
-      </form>
       <button className="add-item-button" onClick={() => navigate('/add-item')}>Add Item</button>
 
       <input
@@ -90,7 +66,7 @@ function Cart() {
       />
       <CartItems items={items} updateQuantity={updateQuantity} />
       <div className="cart-summary">
-        <ShippingOptions updateShipping={updateShipping} />
+        {/* <ShippingOptions updateShipping={updateShipping} /> */}
         <OrderSummary items={items} shippingCost={shippingCost} />
       </div>
     </div>

@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import QrReader from 'react-qr-barcode-scanner';
 
 function AddItem({ addItemToCart }) {
   const [barcode, setBarcode] = useState('');
   const [itemDetails, setItemDetails] = useState({ name: '', price: '', quantity: 1 });
-  const history = useHistory();
+  const [data, setData] = useState('No result');
+  const navigate = useNavigate();
 
-  const handleBarcodeScan = (e) => {
-    // Simulate barcode scanning
-    const scannedBarcode = '1234567890'; // Replace with actual barcode scanning logic
-    setBarcode(scannedBarcode);
-    // Fetch item details based on barcode (simulated here)
-    setItemDetails({ name: 'Sample Item', price: 100, quantity: 1 });
+  const handleScan = (result) => {
+    if (result) {
+      setData(result.text);
+      setBarcode(result.text);
+      // Fetch item details based on barcode (simulated here)
+      setItemDetails({ name: 'Sample Item', price: 100, quantity: 1 });
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
   };
 
   const handleInputChange = (e) => {
@@ -21,13 +28,23 @@ function AddItem({ addItemToCart }) {
 
   const handleAddItem = () => {
     addItemToCart(itemDetails);
-    history.push('/cart');
+    navigate('/cart');
   };
 
   return (
     <div>
-      <h1>Scan Barcode</h1>
-      <button onClick={handleBarcodeScan}>Scan Barcode</button>
+      <div>
+        <h1>Scan Barcode</h1>
+        <QrReader
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+          facingMode="environment"  // This selects the back camera on mobile devices.
+        />
+
+        <p>{data}</p>
+      </div>
       {barcode && (
         <div>
           <h2>Item Details</h2>
@@ -54,7 +71,7 @@ function AddItem({ addItemToCart }) {
             value={itemDetails.quantity}
             onChange={handleInputChange}
           />
-          <button onClick={handleAddItem}>Add to Cart</button>
+          <button onClick={handleAddItem}>Add Item</button>
         </div>
       )}
     </div>
