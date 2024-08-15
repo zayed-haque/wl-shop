@@ -1,47 +1,63 @@
 from wl_shop_service import db
 from wl_shop_service.models.cart import Cart, CartItem
-from sqlalchemy.exc import IntegrityError
-from uuid import uuid4 as uuid
+from wl_shop_service.models.product import Product
 
 
 class CartService:
     @staticmethod
-    def create_cart(user_id):
-        try:
-            cart_id = str(uuid.uuid4())
-            cart = Cart(id=cart_id, user_id=user_id)
+    def get_cart(user_id):
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        if not cart:
+            cart = Cart(user_id=user_id)
             db.session.add(cart)
             db.session.commit()
-            return cart_id
-
-        except IntegrityError:
-            db.session.rollback()
-            raise Exception("Failed to create cart")
+        return cart
 
     @staticmethod
-    def get_cart_items(cart_id):
-        return CartItem.query.filter_by(cart_id=cart_id).all()
+    def add_item(user_id, product_id, quantity):
+        cart = CartService.get_cart(user_id)
+        product = Product.query.get_or_404(product_id)
 
-    @staticmethod
-    def add_item_to_cart(cart_id, product_id, quantity):
-        cart_item = CartItem(cart_id=cart_id, product_id=product_id, quantity=quantity)
-        db.session.add(cart_item)
+        cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+        if cart_item:
+            cart_item.quantity += quantity
+        else:
+            cart_item = CartItem(
+                cart_id=cart.id,
+                product_id=product_id,
+                quantity=quantity,
+                price=product.price  # Assuming Product has a price attribute
+            )
+            db.session.add(cart_item)
+
         db.session.commit()
-        return cart_item
+        return cart
 
     @staticmethod
-    def update_cart_item(cart_id, product_id, quantity):
-        cart_item = CartItem.query.filter_by(
-            cart_id=cart_id, product_id=product_id
-        ).first()
-        cart_item.quantity = quantity
+    def update_item(user_id, product_id, quantity):
+        cart = CartService.get_cart(user_id)
+        cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first_or_404()
+
+        if quantity > 0:
+            cart_item.quantity = quantity
+        else:
+            db.session.delete(cart_item)
+
         db.session.commit()
-        return cart_item
+        return cart
 
     @staticmethod
-    def delete_cart_item(cart_id, product_id):
-        cart_item = CartItem.query.filter_by(
-            cart_id=cart_id, product_id=product_id
-        ).first()
+    def remove_item(user_id, product_id):
+        cart = CartService.get_cart(user_id)
+        cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first_or_404()
+
         db.session.delete(cart_item)
         db.session.commit()
+        return cart
+
+    @staticmethod
+    def clear_cart(user_id):
+        cart = CartService.get_cart(user_id)
+        CartItem.query.filter_by(cart_id=cart.id).delete()
+        db.session.commit()
+        return cart
