@@ -2,8 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import reportWebVitals from './reportWebVitals';
+import { CartProvider } from './components/CartContext';
 
-ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <CartProvider>
+    <App />
+  </CartProvider>
 );
+reportWebVitals();
+

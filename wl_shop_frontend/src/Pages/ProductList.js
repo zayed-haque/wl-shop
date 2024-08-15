@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { CartProvider } from '../components/CartContext';
+
 
 const ProductList = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -28,6 +30,7 @@ const ProductList = () => {
     );
 
     return (
+        <CartProvider>
         <div className='mx-3'>
             <input className="my-3" type="text" placeholder="Search products" onChange={handleSearch} />
             <div>
@@ -44,6 +47,7 @@ const ProductList = () => {
             <Button className="mx-3 my-3 "onClick={handleCartPage}>GotoCart</Button>
 
         </div>
+        </CartProvider>
     );
 };
 

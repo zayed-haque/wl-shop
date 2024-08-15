@@ -1,0 +1,13 @@
+.half-modal .modal-dialog {
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    height: 50%;
+    transition: transform 0.3s ease-out;
+  }
+  
+  .half-modal .modal-content {
+    height: 100%;
+    border-radius: 0;
+  }

@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from './CartContext';
 import Modal from 'react-modal';
 
-const AddItem = ({ addItemToCart }) => {
+const AddItem = () => {
+  const { addItemToCart } = useContext(CartContext);
   const [scanning, setScanning] = useState(false);
   const [barcode, setBarcode] = useState(null);
   const [manualBarcode, setManualBarcode] = useState('');
@@ -63,13 +65,15 @@ const AddItem = ({ addItemToCart }) => {
   };
 
   const handleAddItem = () => {
-    addItemToCart(itemDetails);
+    if (addItemToCart) {
+      addItemToCart(itemDetails);
+    }
     setIsModalOpen(false);
     navigate('/cart');
   };
 
   const handleReturnToApp = () => {
-    navigate('/');
+    navigate('/cart');
   };
 
   const handleManualInput = async () => {

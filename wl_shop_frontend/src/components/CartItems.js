@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from './CartContext';
 
-function CartItems({ items, updateQuantity }) {
+function CartItems() {
+  const { items, updateQuantity, removeItem } = useContext(CartContext);
+
   return (
-    <div className="cart-items">
+    <div>
       <table>
         <thead>
           <tr>
@@ -10,19 +13,26 @@ function CartItems({ items, updateQuantity }) {
             <th>PRICE</th>
             <th>QTY</th>
             <th>TOTAL</th>
+            <th>ACTION</th>
           </tr>
         </thead>
         <tbody>
           {items.map(item => (
-            <tr key={item.id}>
+            <tr key={item.id} className="cart-item">
               <td>{item.name}</td>
               <td>${item.price.toFixed(2)}</td>
               <td>
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                <input
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                  min="1"
+                />
               </td>
               <td>${(item.price * item.quantity).toFixed(2)}</td>
+              <td>
+                <button onClick={() => removeItem(item.id)}>x</button>
+              </td>
             </tr>
           ))}
         </tbody>
