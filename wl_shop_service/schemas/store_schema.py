@@ -16,6 +16,14 @@ class StoreInventorySchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True) 
 
+
+class StorePlanSchema(Schema):
+    id = StoreSchema.id
+    image_url = fields.Url()
+    created_at = fields.DateTime(dump_only=True)
+    updated_at = fields.DateTime(dump_only=True)
+
+
 store_schema = StoreSchema()
 stores_schema = StoreSchema(many=True)
 
