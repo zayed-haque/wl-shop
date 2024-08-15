@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 const AddItem = ({ addItemToCart }) => {
   const [scanning, setScanning] = useState(false);
   const [barcode, setBarcode] = useState(null);
+  const [manualBarcode, setManualBarcode] = useState('');
   const [itemDetails, setItemDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const scannerRef = useRef(null);
@@ -33,8 +34,8 @@ const AddItem = ({ addItemToCart }) => {
     const productDetails = await fetchProductDetails(decodedText);
     setItemDetails({ ...productDetails, quantity: 1 });
     setBarcode(decodedText);
-    setScanning(false);
-    setIsModalOpen(true);
+    setScanning(false); 
+    setIsModalOpen(true); 
   };
 
   const fetchProductDetails = async (barcode) => {
@@ -47,7 +48,10 @@ const AddItem = ({ addItemToCart }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setItemDetails({ ...itemDetails, [name]: value });
+    setItemDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
   };
 
   const handleAddItem = () => {
@@ -60,12 +64,34 @@ const AddItem = ({ addItemToCart }) => {
     navigate('/');
   };
 
+  const handleManualInput = async () => {
+    if (!manualBarcode) {
+      alert("Please Enter Item Name or Barcode");
+      return;
+    }
+    const productDetails = await fetchProductDetails(manualBarcode);
+    setItemDetails({ ...productDetails, quantity: 1 });
+    setBarcode(manualBarcode);
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
-      <h1>Scan Barcode</h1>
+      <h1>Add items</h1>
       <div id="reader" style={{ width: '100%' }}></div>
-      {!scanning && <button onClick={() => setScanning(true)}>Start Scanning</button>}
+      {!scanning && <button onClick={() => setScanning(true)}>Scan Barcode</button>}
       {barcode && <p>Scanned QR Code: {barcode}</p>}
+
+      <div>
+        <h2>Or Search Item</h2>
+        <input
+          type="text"
+          placeholder="Enter Item or Barcode"
+          value={manualBarcode}
+          onChange={(e) => setManualBarcode(e.target.value)}
+        />
+        <button onClick={handleManualInput}>Search</button>
+      </div>
 
       <Modal
         isOpen={isModalOpen}
@@ -116,7 +142,7 @@ const AddItem = ({ addItemToCart }) => {
         <button onClick={handleAddItem}>Add to Cart</button>
         <button onClick={() => setIsModalOpen(false)}>Close</button>
       </Modal>
-      <button onClick={() => navigate('/')}>Return to App</button>
+      <button onClick={handleReturnToApp}>Return to App</button>
     </div>
   );
 };
