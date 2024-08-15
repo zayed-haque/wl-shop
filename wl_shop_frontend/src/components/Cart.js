@@ -1,28 +1,13 @@
-import React, { useState } from 'react';
-import CartItems from './CartItems';
-// import ShippingOptions from './ShippingOptions';
-import OrderSummary from './OrderSummary';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Cart.css'; 
+import CartItems from './CartItems';
+import OrderSummary from './OrderSummary';
+import { CartContext } from '../CartContext';
+import './Cart.css';
 
 function Cart() {
-    const navigate = useNavigate();
-  const [items, setItems] = useState([
-    { id: 1, name: 'Xiaomi 365', price: 484.99, quantity: 1 },
-    { id: 2, name: 'Ninebot ES2', price: 1449.99, quantity: 3 }
-  ]);
-  const [shippingCost, setShippingCost] = useState(0);
-
-  const updateQuantity = (id, newQuantity) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, quantity: Math.max(0, newQuantity) } : item
-    ));
-  };
-
-  const updateShipping = (cost) => {
-    setShippingCost(cost);
-  };
-
+  const navigate = useNavigate();
+  const { items, updateQuantity } = useContext(CartContext);
 
   const handleCapture = (e) => {
     const file = e.target.files[0];
@@ -47,8 +32,7 @@ function Cart() {
       />
       <CartItems items={items} updateQuantity={updateQuantity} />
       <div className="cart-summary">
-        {/* <ShippingOptions updateShipping={updateShipping} /> */}
-        <OrderSummary items={items} shippingCost={shippingCost} />
+        <OrderSummary items={items} />
       </div>
     </div>
   );
