@@ -13,7 +13,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (isNewUser) {
       try {
-        const response = await fetch(`https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register`, {
+        const response = await fetch(`https://wl-shop.onrender.com/api/users/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -43,7 +43,9 @@ const LoginPage = () => {
         }
 
         // Store the access token in local storage
-        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('accessToken', data.access_token);
+        const access_token =localStorage.getItem('accessToken');
+        console.log('Access token set:', localStorage.getItem('accessToken')); 
         console.log('New User Login:', firstName, lastName, email, phoneNumber);
         navigate('/home');
       } catch (error) {

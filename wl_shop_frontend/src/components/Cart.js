@@ -4,18 +4,34 @@ import { CartContext } from './CartContext';
 import CartItems from './CartItems';
 import OrderSummary from './OrderSummary';
 import AddItem from './AddItem';
+import Checkout from './Checkout';
 import './Cart.css';
 
 function Cart() {
   const navigate = useNavigate();
-  const { items, addItemToCart, removeItem } = useContext(CartContext);
+  const { items, addItemToCart, setItems } = useContext(CartContext);
+
+  const [shippingCost, setShippingCost] = useState(0);
+  // setItems(useCart());
+  const updateQuantity = (id, newQuantity) => {
+    setItems(items.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
+    ));
+  };
+
+  const removeItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
 
   const handleCapture = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Process the captured image file as needed
       console.log('Captured image:', file);
     }
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout', { state: { totalPrice } });
   };
 
   return (
@@ -34,9 +50,11 @@ function Cart() {
       <div className="cart-summary">
         <OrderSummary items={items} />
       </div>
+      <button className="checkout-button" onClick={handleCheckout}>Proceed to Checkout</button>
 
       <Routes>
         <Route path="/add-item" element={<AddItem />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );

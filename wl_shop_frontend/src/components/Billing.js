@@ -20,7 +20,7 @@ function Billing() {
         <button type="submit">Complete Purchase</button>
       </form>
       <br></br>
-      <button onClick={() => navigate('/')}>Back to Cart</button>
+      <button onClick={() => navigate('/cart')}>Back to Cart</button>
     </div>
   );
 }

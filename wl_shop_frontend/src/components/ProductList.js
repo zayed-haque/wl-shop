@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal } from 'react-bootstrap';
+import { Card, Button, Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using react-router-dom for navigation
 
 function ProductList({ show, handleClose }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
+  const [quantities, setQuantities] = useState({});
   const navigate = useNavigate();
 
   const handleSearch = async (event) => {
@@ -13,7 +14,7 @@ function ProductList({ show, handleClose }) {
 
     if (query.length > 0) {
       try {
-        const response = await fetch(`https://0dmrp3hs-5000.inc1.devtunnels.ms/api/1/products/search?q=${query}`);
+        const response = await fetch(`https://wl-shop.onrender.com/api/2/products/search?q=${query}`);
         const data = await response.json();
         setProducts(data.products);
       } catch (error) {
@@ -23,6 +24,53 @@ function ProductList({ show, handleClose }) {
       setProducts([]);
     }
   };
+
+  const handleQuantityChange = (productId, quantity) => {
+    setQuantities({
+      ...quantities,
+      [productId]: quantity,
+    });
+  };
+
+  const getAccessToken = () => {
+    const token = localStorage.getItem('accessToken');
+    console.log('Access token retrieved:', token); // Verify token is retrieved
+    return token;
+  };
+  
+  const handleAddToCart = async (product, quantity) => {
+    const payload = {
+      product_id: product.id,
+      quantity: quantity,
+    };
+  
+    const token = getAccessToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+      const response = await fetch('https://wl-shop.onrender.com/api/cart/add', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Response status:', response.status);
+        console.error('Response body:', errorText);
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Item added to cart:', data);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+  
 
   const handleOpenBarcodePage = () => {
     navigate('/add-item');
@@ -49,6 +97,21 @@ function ProductList({ show, handleClose }) {
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Text>{product.description}</Card.Text>
                     <Card.Text>Price: Rs{product.price}</Card.Text>
+                    <Form.Group controlId={`quantity-${product.id}`}>
+                      <Form.Label>Quantity</Form.Label>
+                      <Form.Control
+                        type="number"
+                        min="1"
+                        value={quantities[product.id] || 1}
+                        onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                      />
+                    </Form.Group>
+                    <Button
+                      className="mt-2"
+                      onClick={() => handleAddToCart(product, quantities[product.id] || 1)}
+                    >
+                      Add to Cart
+                    </Button>
                   </Card.Body>
                 </Card>
               ))
@@ -56,9 +119,10 @@ function ProductList({ show, handleClose }) {
               <p>No products found</p>
             )}
           </div>
-          <div className=''> <Button onClick={handleOpenBarcodePage}>Open Barcode Page</Button>
-          <Button className="mx-3 my-3" onClick={handleCartPage}>GotoCart</Button></div>
-         
+          <div className=''> 
+            <Button onClick={handleOpenBarcodePage}>Open Barcode Page</Button>
+            <Button className="mx-3 my-3" onClick={handleCartPage}>GotoCart</Button>
+          </div>
         </div>
       </Modal.Body>
     </Modal>

@@ -9,32 +9,32 @@ import ProductList from './components/ProductList';
 import HomePage from './Pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Checkout from './components/Checkout';
 
 
 function App() {
   return (
 
-    <CartProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/productlist" element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          } />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/billing" element={<Billing />} />
-          <Route path="/add-item" element={<AddItem />} />
-          </Routes>
-        </div>
-      </Router>
-    </CartProvider>
-
-
-  );
+      <CartProvider>
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/productlist" element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              } />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/billing" element={<Billing />} />
+              <Route path="/add-item" element={<AddItem />} />
+              <Route path="/checkout" element={<Checkout />} /> {/* Ensure this line is present */}
+            </Routes>
+          </div>
+        </Router>
+      </CartProvider>
+    );
 }
 
 export default App;
