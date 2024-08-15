@@ -33,8 +33,8 @@ const AddItem = ({ addItemToCart }) => {
     const productDetails = await fetchProductDetails(decodedText);
     setItemDetails({ ...productDetails, quantity: 1 });
     setBarcode(decodedText);
-    setScanning(false); 
-    setIsModalOpen(true); 
+    setScanning(false);
+    setIsModalOpen(true);
   };
 
   const fetchProductDetails = async (barcode) => {
@@ -112,6 +112,7 @@ const AddItem = ({ addItemToCart }) => {
         <button onClick={handleAddItem}>Add to Cart</button>
         <button onClick={() => setIsModalOpen(false)}>Close</button>
       </Modal>
+      <button onClick={() => navigate('/')}>Return to App</button>
     </div>
   );
 };
