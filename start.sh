@@ -7,6 +7,8 @@ while ! nc -z $DB_HOST $DB_PORT; do
 done
 echo "Database is ready!"
 
+python populate_db.py
+
 # Run database migrations
 flask db upgrade
 
