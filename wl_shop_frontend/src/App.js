@@ -1,15 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cart from './components/Cart';
 import Billing from './components/Billing';
 import AddItem from './components/AddItem';
 import { CartProvider } from './components/CartContext';
-
 import './App.css';
 import LoginPage from './Pages/LoginPage';
 import ProductList from './components/ProductList';
 import HomePage from './Pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 function App() {
