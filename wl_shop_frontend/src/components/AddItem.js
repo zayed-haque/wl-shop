@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from './CartContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
+import { FaBarcode, FaSearch } from 'react-icons/fa';
+import './AddItem.css'; // We'll create this CSS file for custom styles
 
 const AddItem = () => {
   const { addItemToCart } = useContext(CartContext);
@@ -32,12 +36,12 @@ const AddItem = () => {
     };
   }, [scanning]);
 
-  const handleBarcodeScanned = async (decodedText, decodedResult) => {
+  const handleBarcodeScanned = async (decodedText) => {
     const productDetails = await fetchProductDetails(decodedText);
     setItemDetails({ ...productDetails, quantity: 1 });
     setBarcode(decodedText);
-    setScanning(false); 
-    setIsModalOpen(true); 
+    setScanning(false);
+    setIsModalOpen(true);
   };
 
   const fetchProductDetails = async (barcode) => {
@@ -49,31 +53,29 @@ const AddItem = () => {
       const data = await response.json();
       return {
         name: data.name,
-        price: data.price,
+        price: parseFloat(data.price) || 0,
         description: data.description,
         image_url: data.image_url
       };
     } catch (error) {
       console.error('Error fetching product details:', error);
-      return {};
+      return { name: 'Unknown Product', price: 0, description: '', image_url: '' };
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setItemDetails({ ...itemDetails, [name]: value });
+    setItemDetails({ ...itemDetails, [name]: name === 'price' ? parseFloat(value) || 0 : value });
   };
 
   const handleAddItem = () => {
-    if (addItemToCart) {
+    if (addItemToCart && itemDetails.name && itemDetails.price >= 0) {
       addItemToCart(itemDetails);
+      setIsModalOpen(false);
+      navigate('/cart');
+    } else {
+      alert('Invalid item details. Please ensure name and price are valid.');
     }
-    setIsModalOpen(false);
-    navigate('/cart');
-  };
-
-  const handleReturnToApp = () => {
-    navigate('/cart');
   };
 
   const handleManualInput = async () => {
@@ -88,76 +90,92 @@ const AddItem = () => {
   };
 
   return (
-    <div>
-      <h1>Add items</h1>
-      <div id="reader" style={{ width: '100%' }}></div>
-      {!scanning && <button onClick={() => setScanning(true)}>Scan Barcode</button>}
-      {barcode && <p>Scanned QR Code: {barcode}</p>}
+    <Container className="add-item-container">
+      <h1 className="text-center mb-4">Add Item to Cart</h1>
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Scan Barcode</Card.Title>
+              <div id="reader" className="mb-3"></div>
+              <Button 
+                variant="primary" 
+                onClick={() => setScanning(!scanning)}
+                className="w-100"
+              >
+                <FaBarcode className="me-2" />
+                {scanning ? 'Stop Scanning' : 'Start Scanning'}
+              </Button>
+            </Card.Body>
+          </Card>
 
-      <div>
-        <h2>Or Search Item</h2>
-        <input
-          type="text"
-          placeholder="Enter Item or Barcode"
-          value={manualBarcode}
-          onChange={(e) => setManualBarcode(e.target.value)}
-        />
-        <button onClick={handleManualInput}>Search</button>
-      </div>
+          <Card>
+            <Card.Body>
+              <Card.Title>Manual Input</Card.Title>
+              <Form onSubmit={(e) => { e.preventDefault(); handleManualInput(); }}>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Item Name or Barcode"
+                    value={manualBarcode}
+                    onChange={(e) => setManualBarcode(e.target.value)}
+                  />
+                </Form.Group>
+                <Button variant="secondary" type="submit" className="w-100">
+                  <FaSearch className="me-2" />
+                  Search Item
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
 
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         contentLabel="Item Details"
-        style={{
-          content: {
-            width: '300px',
-            height: 'auto',
-            margin: 'auto',
-            padding: '20px',
-            borderRadius: '10px',
-          },
-        }}
+        className="item-details-modal"
+        overlayClassName="item-details-overlay"
       >
         <h2>Item Details</h2>
-        <p>Scanned QR Code: {barcode}</p>
-        <img src={itemDetails.image_url} alt={itemDetails.name} style={{ width: '100%' }} />
-        <div>
-          <label htmlFor="name">Item Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={itemDetails.name || ''}
-            readOnly
-          />
-        </div>
-        <div>
-          <label htmlFor="price">Item Price</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={itemDetails.price || ''}
-            readOnly
-          />
-        </div>
-        <div>
-          <label htmlFor="quantity">Quantity</label>
-          <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            value={itemDetails.quantity || ''}
-            min="1"
-            onChange={handleInputChange}
-          />
-        </div>
-        <button onClick={handleAddItem}>Add to Cart</button>
-        <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+        <img src={itemDetails.image_url} alt={itemDetails.name} className="item-image" />
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Item Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={itemDetails.name || ''}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="number"
+              name="price"
+              value={itemDetails.price || ''}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
+              type="number"
+              name="quantity"
+              value={itemDetails.quantity || 1}
+              onChange={handleInputChange}
+              min="1"
+            />
+          </Form.Group>
+          <Button variant="primary" onClick={handleAddItem} className="me-2">Add to Cart</Button>
+          <Button variant="secondary" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+        </Form>
       </Modal>
-      <button onClick={handleReturnToApp}>Return to App</button>
-    </div>
+    </Container>
   );
 };
 
