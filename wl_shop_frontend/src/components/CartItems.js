@@ -13,7 +13,7 @@ function CartItems() {
             <th>PRICE</th>
             <th>QTY</th>
             <th>TOTAL</th>
-            <th>ACTION</th>
+            <th>ACTIO</th>
           </tr>
         </thead>
         <tbody>
