@@ -59,10 +59,7 @@ const AddItem = ({ addItemToCart }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setItemDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: name === 'quantity' && value < 1 ? 1 : value,
-    }));
+    setItemDetails({ ...itemDetails, [name]: value });
   };
 
   const handleAddItem = () => {

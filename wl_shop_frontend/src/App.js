@@ -5,6 +5,7 @@ import Billing from './components/Billing';
 import AddItem from './components/AddItem';
 
 import './App.css';
+import LoginPage from './Pages/LoginPage';
 
 function App() {
   return (
