@@ -24,9 +24,7 @@ class CartService:
         cart = CartService.get_cart(user_id)
         product = Product.query.get_or_404(product_id)
 
-        cart_item = CartItem.query.filter_by(
-            cart_id=cart.id, product_id=product_id
-        ).first()
+        cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
         if cart_item:
             cart_item.quantity += quantity
         else:
@@ -34,7 +32,7 @@ class CartService:
                 cart_id=cart.id,
                 product_id=product_id,
                 quantity=quantity,
-                price=product.price,
+                price=product.price
             )
             db.session.add(cart_item)
 
