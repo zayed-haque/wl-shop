@@ -1,10 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function OrderSummary({ items, shippingCost }) {
+function OrderSummary({ items }) {
   const navigate = useNavigate();
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const total = subtotal + shippingCost;
+  
+  const total = items.reduce((sum, item) => {
+    const itemPrice = parseFloat(item.price) || 0;
+    const itemQuantity = parseInt(item.quantity) || 0;
+    return sum + (itemPrice * itemQuantity);
+  }, 0);
 
   const handleCheckout = () => {
     console.log('Checkout button clicked'); 

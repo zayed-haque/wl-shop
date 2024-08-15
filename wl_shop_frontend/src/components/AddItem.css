@@ -1,4 +1,4 @@
-.add-item-container {
+/* .add-item-container {
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
@@ -66,5 +66,48 @@ h1 {
 
   .item-details input {
     font-size: 14px;
+  }
+} */
+
+.add-item-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.item-details-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.item-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.item-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+#reader {
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .item-details-modal {
+    width: 95%;
+    padding: 1rem;
   }
 }
