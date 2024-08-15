@@ -1,12 +1,12 @@
-from marshmallow import Schema, fields, validate
+from wl_shop_service import ma
+from wl_shop_service.models.user import User
 
 
-class UserSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str()
-    email = fields.Email()
-    password = fields.Str()
-    created_at = fields.DateTime(dump_only=True)
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+        exclude = ('created_at',)
 
 
 user_schema = UserSchema()
