@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/wl_shop_db
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./wl_shop_service:/app/wl_shop_service
+      - ./migrations:/app/migrations
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=wl_shop_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d wl_shop_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
