@@ -39,18 +39,29 @@ const AddItem = ({ addItemToCart }) => {
   };
 
   const fetchProductDetails = async (barcode) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ name: 'Sample Item', price: 100 });
-      }, 1000);
-    });
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/products/${barcode}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return {
+        name: data.name,
+        price: data.price,
+        description: data.description,
+        image_url: data.image_url
+      };
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+      return {};
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setItemDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: value,
+      [name]: name === 'quantity' && value < 1 ? 1 : value,
     }));
   };
 
@@ -109,6 +120,7 @@ const AddItem = ({ addItemToCart }) => {
       >
         <h2>Item Details</h2>
         <p>Scanned QR Code: {barcode}</p>
+        <img src={itemDetails.image_url} alt={itemDetails.name} style={{ width: '100%' }} />
         <div>
           <label htmlFor="name">Item Name</label>
           <input
@@ -116,7 +128,7 @@ const AddItem = ({ addItemToCart }) => {
             id="name"
             name="name"
             value={itemDetails.name || ''}
-            onChange={handleInputChange}
+            readOnly
           />
         </div>
         <div>
@@ -126,7 +138,7 @@ const AddItem = ({ addItemToCart }) => {
             id="price"
             name="price"
             value={itemDetails.price || ''}
-            onChange={handleInputChange}
+            readOnly
           />
         </div>
         <div>
@@ -136,11 +148,12 @@ const AddItem = ({ addItemToCart }) => {
             id="quantity"
             name="quantity"
             value={itemDetails.quantity || ''}
+            min="1"
             onChange={handleInputChange}
           />
         </div>
         <button onClick={handleAddItem}>Add to Cart</button>
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
+        <button onClick={() => setIsModalOpen(false)}>Cancel</button>
       </Modal>
       <button onClick={handleReturnToApp}>Return to App</button>
     </div>
