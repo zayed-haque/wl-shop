@@ -15,9 +15,6 @@ def create_app():
 
     app.config.from_object("config.Config")
 
-    # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://localhost/wl_shop_db')
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     db.init_app(app)
     ma.init_app(app)
     migrate.init_app(app, db)
@@ -29,6 +26,6 @@ def create_app():
 
     app.register_blueprint(product_bp, url_prefix="/api")
     app.register_blueprint(cart_bp, url_prefix="/api")
-    app.register_blueprint(auth_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
     return app

@@ -1,11 +1,17 @@
 from wl_shop_service import db
 from wl_shop_service.models.cart import Cart, CartItem
 from wl_shop_service.models.product import Product
+from wl_shop_service.models.user import User
 
 
 class CartService:
     @staticmethod
     def get_cart(user_id):
+        # Check if user exists
+        user = User.query.get(user_id)
+        if not user:
+            raise ValueError("User does not exist")
+
         cart = Cart.query.filter_by(user_id=user_id).first()
         if not cart:
             cart = Cart(user_id=user_id)
@@ -26,7 +32,7 @@ class CartService:
                 cart_id=cart.id,
                 product_id=product_id,
                 quantity=quantity,
-                price=product.price  # Assuming Product has a price attribute
+                price=product.price
             )
             db.session.add(cart_item)
 

@@ -1,5 +1,7 @@
 from wl_shop_service import db
 from datetime import datetime
+from wl_shop_service.models.user import User
+from wl_shop_service.models.product import Product
 
 
 class Cart(db.Model):
@@ -13,6 +15,7 @@ class Cart(db.Model):
     items = db.relationship(
         "CartItem", back_populates="cart", cascade="all, delete-orphan"
     )
+    user = db.relationship("User", back_populates="carts")
 
     def __repr__(self):
         return f"<Cart {self.id}>"
