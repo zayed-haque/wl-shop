@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import { CartContext } from './CartContext';
 import CartItems from './CartItems';
@@ -10,9 +10,70 @@ import './Cart.css';
 function Cart() {
   const navigate = useNavigate();
   const { items, addItemToCart, setItems } = useContext(CartContext);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const [shippingCost, setShippingCost] = useState(0);
-  // setItems(useCart());
+
+  const fetchCartData = async () => {
+    const token = localStorage.getItem('accessToken');
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await fetch('https://wl-shop.onrender.com/api/cart', {
+        method: 'GET',
+        headers: headers,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Response status:', response.status);
+        console.error('Response body:', errorText);
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Fetched cart data:', data); // Log the entire response
+
+      // Check if the items array contains the product name
+      if (data.items && data.items.length > 0) {
+        data.items.forEach(item => {
+          console.log('Product name:', item.name); // Log each product name
+        });
+      }
+      const formattedItems = data.items.map(item => ({
+        id: item.id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+      }));
+
+      setItems(formattedItems);
+      console.log(data.items); // Update the CartContext with fetched data
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartData();
+  }, []);
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      setTotalPrice(total);
+    };
+    calculateTotalPrice();
+  }, [items]);
+
+  // const handleCartPage = () => {
+  //   fetchCartData();
+  //   navigate('/cart');
+  // };
+
   const updateQuantity = (id, newQuantity) => {
     setItems(items.map(item => 
       item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
@@ -46,9 +107,9 @@ function Cart() {
         style={{ display: 'none' }}
         onChange={handleCapture}
       />
-      <CartItems />
+      <CartItems items={items} updateQuantity={updateQuantity} removeItem={removeItem} />
       <div className="cart-summary">
-        <OrderSummary items={items} />
+        <OrderSummary items={items} shippingCost={shippingCost} />
       </div>
       <button className="checkout-button" onClick={handleCheckout}>Proceed to Checkout</button>
 
