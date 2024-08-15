@@ -56,6 +56,10 @@ const AddItem = ({ addItemToCart }) => {
     navigate('/cart');
   };
 
+  const handleReturnToApp = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       <h1>Scan Barcode</h1>
