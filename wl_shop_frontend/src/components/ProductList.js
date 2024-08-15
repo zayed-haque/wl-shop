@@ -33,7 +33,7 @@ function ProductList({ show, handleClose }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} animation={false} dialogClassName={`half-modal ${show ? 'fade-in' : 'fade-out'}`}>
+    <Modal show={show} onHide={handleClose} animation={false} dialogClassName="half-modal">
       <Modal.Header closeButton>
         <Modal.Title>Product List</Modal.Title>
       </Modal.Header>
@@ -56,7 +56,7 @@ function ProductList({ show, handleClose }) {
               <p>No products found</p>
             )}
           </div>
-          <div className='button-group'> <Button onClick={handleOpenBarcodePage}>Open Barcode Page</Button>
+          <div className=''> <Button onClick={handleOpenBarcodePage}>Open Barcode Page</Button>
           <Button className="mx-3 my-3" onClick={handleCartPage}>GotoCart</Button></div>
          
         </div>

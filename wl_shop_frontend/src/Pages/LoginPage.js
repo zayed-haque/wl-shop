@@ -13,7 +13,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (isNewUser) {
       try {
-        const response = await fetch('https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register', {
+        const response = await fetch(`https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
