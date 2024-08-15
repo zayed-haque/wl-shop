@@ -10,7 +10,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(20), unique=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    carts = db.relationship('Cart', back_populates='user', lazy=True)
+    carts = db.relationship("Cart", back_populates="user", lazy=True)
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f"<User {self.email}>"
