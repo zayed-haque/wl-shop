@@ -23,10 +23,10 @@ class Cart(db.Model):
 
 class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
     price = db.Column(db.Float, nullable=False)
 
-    cart = db.relationship('Cart', back_populates='items')
-    product = db.relationship('Product')
+    cart = db.relationship("Cart", back_populates="items")
+    product = db.relationship("Product")

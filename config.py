@@ -9,4 +9,4 @@ class Config:
         "DATABASE_URL", "postgresql://localhost/wl_shop_db"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET_KEY = 'test'
+    JWT_SECRET_KEY = "test"

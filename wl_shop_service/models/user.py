@@ -9,7 +9,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    carts = db.relationship('Cart', back_populates='user', lazy=True)
+    carts = db.relationship("Cart", back_populates="user", lazy=True)
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f"<User {self.username}>"
