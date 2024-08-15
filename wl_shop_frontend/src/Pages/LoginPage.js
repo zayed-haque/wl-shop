@@ -20,35 +20,66 @@ const LoginPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (isNewUser) {
-      if (checkUserExists(email, phoneNumber)) {
-        alert('A user with this email or phone number already exists.');
-        return;
+      try {
+        const response = await fetch('https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone_number: phoneNumber,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.status === 409) {
+          alert('A user with this email or phone number already exists.');
+          return;
+        }
+
+        if (response.ok) {
+          // Store the access token in local storage
+          localStorage.setItem('accessToken', data.accessToken);
+          console.log('New User Login:', firstName, lastName, email, phoneNumber);
+          navigate('/home');
+        } else {
+          alert('Failed to register user.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while registering the user.');
       }
-      // Handle new user login
-      console.log('New User Login:', firstName, lastName, email, phoneNumber);
     } else {
       // Handle existing user login
       console.log('Existing User Login:', email);
+      navigate('/home');
     }
-    navigate('/cart');
   };
+
 
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
         <h2>Login</h2>
-        <div className="form-group checkbox-group">
-          <input
-            type="checkbox"
-            id="newUser"
-            className="check-loginuser"
-            checked={isNewUser}
-            onChange={() => setIsNewUser(!isNewUser)}
-          />
-          <label htmlFor="newUser">Are you a new user?</label>
-        </div>
+        
+        <div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    id="newUser"
+    checked={isNewUser}
+    onChange={() => setIsNewUser(!isNewUser)}
+  />
+  <label className="form-check-label" htmlFor="newUser">
+    Are you a new user?
+  </label>
+</div>
         {isNewUser && (
           <>
             <div className="form-group">
