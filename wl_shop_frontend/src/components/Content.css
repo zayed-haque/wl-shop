@@ -1,0 +1,47 @@
+.app-content {
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  .welcome-box {
+    font-size: 34px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color:#5BBCFF;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  .intro{
+    font-size: 20px;
+    color: #fffbfb;
+    margin-bottom: 10px;
+    text-align:left;
+  }
+  
+  .suggested-products {
+    margin-top: 20px;
+  }
+  
+  .suggested-products h2 {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }

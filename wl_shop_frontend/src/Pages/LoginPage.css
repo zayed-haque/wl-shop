@@ -37,14 +37,14 @@
     border-radius: 4px;
   }
   
-  /* .checkbox-group {
+  .form-group-checkbox-group {
     display: flex;
     align-items: center;
-  } */
+  }
   
-  /* .checkbox-group input {
-    margin-right: 50px;
-  } */
+  .form-check-input {
+    margin-right: 10px;
+  }
   
   .login-button {
     width: 100%;
@@ -59,8 +59,4 @@
   
   .login-button:hover {
     background-color: #0056b3;
-  }
-  .form-group-checkbox-group{
-    display: flex;
-    align-items: center;    
   }

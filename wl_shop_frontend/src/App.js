@@ -7,8 +7,9 @@ import { CartProvider } from './components/CartContext';
 
 import './App.css';
 import LoginPage from './Pages/LoginPage';
-import ProductList from './Pages/ProductList';
+import ProductList from './components/ProductList';
 import HomePage from './Pages/HomePage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -20,7 +21,11 @@ function App() {
           <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/productlist" element={<ProductList />} />
+          <Route path="/productlist" element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          } />
           <Route path="/cart" element={<Cart />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/add-item" element={<AddItem />} />

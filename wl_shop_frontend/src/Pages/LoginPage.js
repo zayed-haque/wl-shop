@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Make sure to import the CSS file
 
-
 const LoginPage = () => {
   const [isNewUser, setIsNewUser] = useState(true);
   const [firstName, setFirstName] = useState('');
@@ -14,7 +13,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (isNewUser) {
       try {
-        const response = await fetch('REACT_API_USER', {
+        const response = await fetch('https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -27,21 +26,26 @@ const LoginPage = () => {
           }),
         });
 
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Failed to register user:', errorText);
+          alert('Failed to register user.');
+          return;
+        }
+
         const data = await response.json();
+        console.log('Response Status:', response.status);
+        console.log('Response Data:', data);
 
         if (response.status === 409) {
           alert('A user with this email or phone number already exists.');
           return;
         }
 
-        if (response.ok) {
-          // Store the access token in local storage
-          localStorage.setItem('accessToken', data.accessToken);
-          console.log('New User Login:', firstName, lastName, email, phoneNumber);
-          navigate('/home');
-        } else {
-          alert('Failed to register user.');
-        }
+        // Store the access token in local storage
+        localStorage.setItem('accessToken', data.accessToken);
+        console.log('New User Login:', firstName, lastName, email, phoneNumber);
+        navigate('/home');
       } catch (error) {
         console.error('Error:', error);
         alert('An error occurred while registering the user.');
@@ -53,24 +57,24 @@ const LoginPage = () => {
     }
   };
 
-
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
         <h2>Login</h2>
         
-        <div className="form-check">
-  <input
-    className="form-check-input"
-    type="checkbox"
-    id="newUser"
-    checked={isNewUser}
-    onChange={() => setIsNewUser(!isNewUser)}
-  />
-  <label className="form-check-label" htmlFor="newUser">
-    Are you a new user?
-  </label>
-</div>
+        <div className="form-group-checkbox-group">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="newUser"
+            checked={isNewUser}
+            onChange={() => setIsNewUser(!isNewUser)}
+          />
+          <label className="form-check-label" htmlFor="newUser">
+            Are you a new user?
+          </label>
+        </div>
+        
         {isNewUser && (
           <>
             <div className="form-group">
