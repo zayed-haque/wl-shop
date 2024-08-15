@@ -61,10 +61,7 @@ const AddItem = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setItemDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: name === 'quantity' && value < 1 ? 1 : value,
-    }));
+    setItemDetails({ ...itemDetails, [name]: value });
   };
 
   const handleAddItem = () => {
@@ -72,11 +69,11 @@ const AddItem = () => {
       addItemToCart(itemDetails);
     }
     setIsModalOpen(false);
-    navigate('/');
+    navigate('/cart');
   };
 
   const handleReturnToApp = () => {
-    navigate('/');
+    navigate('/cart');
   };
 
   const handleManualInput = async () => {

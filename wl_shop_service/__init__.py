@@ -26,8 +26,10 @@ def create_app():
     from wl_shop_service.routes.cart_routes import cart_bp
     from wl_shop_service.routes.auth_routes import auth_bp
     from wl_shop_service.routes.user_routes import user_bp
+    from wl_shop_service.routes.order_routes import order_bp
 
     app.register_blueprint(user_bp, url_prefix="/api/users")
+    app.register_blueprint(order_bp, url_prefix="/api")
     app.register_blueprint(product_bp, url_prefix="/api")
     app.register_blueprint(cart_bp, url_prefix="/api")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")

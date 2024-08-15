@@ -1,17 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import { CartContext } from './CartContext';
-
 import CartItems from './CartItems';
 import OrderSummary from './OrderSummary';
+
 import AddItem from './AddItem';
 import './Cart.css';
 
 function Cart() {
   const navigate = useNavigate();
   const { items, addItemToCart, setItems } = useContext(CartContext);
-  const [shippingCost, setShippingCost] = useState(0);
 
+  const [shippingCost, setShippingCost] = useState(0);
+  // setItems(useCart());
   const updateQuantity = (id, newQuantity) => {
     setItems(items.map(item => 
       item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item

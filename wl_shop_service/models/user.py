@@ -11,6 +11,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     carts = db.relationship("Cart", back_populates="user", lazy=True)
+    orders = db.relationship('Order', back_populates='user', lazy=True)
 
     def __repr__(self):
         return f"<User {self.email}>"
