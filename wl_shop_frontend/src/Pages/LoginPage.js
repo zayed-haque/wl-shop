@@ -2,15 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Make sure to import the CSS file
 
-// Mock function to check if user exists
-const checkUserExists = (email, phoneNumber) => {
-  // Replace this with actual logic to check user existence
-  const existingUsers = [
-    { email: 'sandeepan782@gmail.com.com', phoneNumber: '8101596976' },
-    // Add more existing users here
-  ];
-  return existingUsers.some(user => user.email === email || user.phoneNumber === phoneNumber);
-};
 
 const LoginPage = () => {
   const [isNewUser, setIsNewUser] = useState(true);
@@ -23,7 +14,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     if (isNewUser) {
       try {
-        const response = await fetch('https://0dmrp3hs-5000.inc1.devtunnels.ms/api/users/register', {
+        const response = await fetch('REACT_API_USER', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

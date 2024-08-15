@@ -23,19 +23,19 @@ function Footer() {
         <div className="row text-center">
           <div className="col">
             <button className="btn btn-light" onClick={handleSearchClick}>
-            <img src='wl-shop/wl_shop_frontend/images/search.png' alt="" style={{ width: '24px', height: '24px' }} />
+            <img src='/images/search.png' alt="" style={{ width: '24px', height: '24px' }} />
               <i className="fas fa-search"></i>
             </button>
           </div>
           <div className="col">
             <button className="btn btn-light" onClick={handleScannerClick}>
-            <img src='/Users/sandeepanghosh/Downloads/walmart-clone/wl-shop/wl_shop_frontend/images/barcode-scan.png' alt="" style={{ width: '24px', height: '24px' }} />
+            <img src='/images/barcode-scan.png' alt="" style={{ width: '24px', height: '24px' }} />
               <i className="fas fa-barcode"></i>
             </button>
           </div>
           <div className="col">
             <button className="btn btn-light" onClick={handleCartClick}>
-            <img src='/Users/sandeepanghosh/Downloads/walmart-clone/wl-shop/wl_shop_frontend/images/grocery-store.png' alt="" style={{ width: '24px', height: '24px' }} />
+            <img src='/images/grocery-store.png' alt="" style={{ width: '24px', height: '24px' }} />
               <i className="fas fa-shopping-cart"></i>
             </button>
           </div>
