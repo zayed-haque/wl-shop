@@ -85,6 +85,7 @@ def create_products_and_inventory(store_id):
             "image_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTCFKHs6Z6LmoDr9UgMgqY2ssMqdHgIFrSY8bzt-W4-jM-t3eIm_ctp7VVaixUfkf-vgpFLMGSbJWXQPKdFe-CAqHVQ2TkT7PcIRNsb1WccHk0hMH4rD-e3ndI",
         },
         {
+            "id": 8901207001888,
             "name": "Honitus Serup",
             "description": "Cough serup",
             "price": 2.99,
