@@ -7,7 +7,7 @@ import random
 
 def create_stores():
     stores = [
-        Store(name="Walmart Store Chennai 3", address="Velachery"),
+        Store(name="Walmart Store Chennai", address="Velachery"),
     ]
     for store in stores:
         existing_store = Store.query.filter_by(name=store.name).first()
@@ -83,6 +83,13 @@ def create_products_and_inventory(store_id):
             "price": 2.99,
             "category": "Groceries",
             "image_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTCFKHs6Z6LmoDr9UgMgqY2ssMqdHgIFrSY8bzt-W4-jM-t3eIm_ctp7VVaixUfkf-vgpFLMGSbJWXQPKdFe-CAqHVQ2TkT7PcIRNsb1WccHk0hMH4rD-e3ndI",
+        },
+        {
+            "name": "Honitus Serup",
+            "description": "Cough serup",
+            "price": 2.99,
+            "category": "Groceries",
+            "image_url": "https://static.meds.cvpharmacy.in/wp-content/uploads/2024/06/7322_30f3d4a1-fe56-48aa-a394-9b3f975b5551_30f3d4a1-fe56-48aa-a394-9b3f975b5551-1.jpg",
         },
         # Home & Kitchen
         {
