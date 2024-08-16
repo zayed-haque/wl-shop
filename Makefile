@@ -46,7 +46,7 @@ frontend:
 
 # Build frontend for production
 frontend-build:
-	cd wl_shop_frontend && npm install && npm run build
+	cd wl_shop_frontend && npm install -i --legacy-peer-deps && npm run build
 
 # Run both backend and frontend
 run-all:
