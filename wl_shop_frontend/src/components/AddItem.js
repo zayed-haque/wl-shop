@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { FaBarcode, FaSearch } from 'react-icons/fa';
-import './AddItem.css'; // We'll create this CSS file for custom styles
+import './AddItem.css';
 
 const AddItem = () => {
   const { addItemToCart } = useContext(CartContext);
@@ -22,7 +22,7 @@ const AddItem = () => {
     if (scanning) {
       scannerRef.current = new Html5QrcodeScanner(
         "reader",
-        { fps: 10, qrbox: 250 },
+        { fps: 10, qrbox: 250},
         false
       );
       scannerRef.current.render(handleBarcodeScanned);
@@ -91,7 +91,12 @@ const AddItem = () => {
 
   return (
     <Container className="add-item-container">
-      <h1 className="text-center mb-4">Add Item to Cart</h1>
+      <nav>
+        <Button variant="link" onClick={() => navigate('/home')} className="back-button">
+          <img src="images/back.svg" alt="back-button" />
+        </Button>
+        <span><h1 className="text-center mb-4">Add Item to Cart</h1></span>
+      </nav>
       <Row className="justify-content-center">
         <Col md={6}>
           <Card className="mb-4">

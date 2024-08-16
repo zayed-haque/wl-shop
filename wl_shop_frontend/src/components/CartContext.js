@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [items, setItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const addItemToCart = (item) => {
         const existingItem = items.find(i => i.name === item.name);
@@ -29,8 +30,17 @@ export const CartProvider = ({ children }) => {
         ));
     };
 
+    useEffect(() => {
+        const calculateTotalPrice = () => {
+            const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            setTotalPrice(total);
+        };
+
+        calculateTotalPrice();
+    }, [items]);
+
     return (
-        <CartContext.Provider value={{ items, addItemToCart, setItems, removeItem, updateQuantity }}>
+        <CartContext.Provider value={{ items, addItemToCart, setItems, removeItem, updateQuantity, totalPrice }}>
             {children}
         </CartContext.Provider>
     );

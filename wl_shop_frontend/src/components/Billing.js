@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from './CartContext';
 
 function Billing() {
   const navigate = useNavigate();
+  const { totalPrice } = useContext(CartContext);
+
+  const handleCheckout = () => {
+    navigate('/checkout', { state: { totalPrice } });
+  };
 
   return (
     <div className="billing-container">
       <h1>Billing Information</h1>
+      <p>Total Price: ${totalPrice}</p>
       {/* Add your billing form here */}
       <form>
         <input type="text" placeholder="Full Name" />
@@ -17,10 +24,10 @@ function Billing() {
         <input type="text" placeholder="Card Number" />
         <input type="text" placeholder="Expiry Date" />
         <input type="text" placeholder="CVV" />
-        <button type="submit">Complete Purchase</button>
+        <button type="button" onClick={handleCheckout}>Complete Purchase</button>
       </form>
       <br></br>
-      <button onClick={() => navigate('/cart')}>Back to Cart</button>
+      <button onClick={() => navigate('/cart')}>Return to Cart</button>
     </div>
   );
 }
