@@ -1,23 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Header.css';
+
 function Header() {
-    // const navigate = useNavigate();
-    // const handleUserClick = () => {
-    //         navigate('/cart');
-    // };
   return (
     <header className="app-header">
-      <div className="walmart-icon">
-       <img src='/images/walmart.png' alt="" style={{ width: '20px', height: '20px' }} />
-              <i className="fas fa-logo"></i>
-      </div>
-     
-      <div className="user-icon">
-      {/* <button className="btn btn-light" onClick={handleUserClick}> */}
-            <img src='/images/profile-user.png' alt="" style={{ width: '20px', height: '20px' }} />
-              <i className="fas fa-user"></i>
-            {/* </button> */}
+      <div className="header-content">
+        <div className="walmart-icon">
+          <img src="images/walmart.png" alt="Walmart" />
+        </div>
+
+          <div>
+          <button className="icon-button user-icon">
+            <img src="images/profile.svg" alt="User" />
+          </button>
+        </div>
       </div>
     </header>
   );

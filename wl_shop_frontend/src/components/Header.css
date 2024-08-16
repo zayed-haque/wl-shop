@@ -1,0 +1,53 @@
+.app-header {
+    background-color: #0071dc;
+    padding: 12px 20px;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .walmart-icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .walmart-icon img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+  }
+  
+  .header-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 0;
+  }
+  
+  .icon-button img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .user-icon img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }

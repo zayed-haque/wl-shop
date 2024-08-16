@@ -61,68 +61,72 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-        <h2>Login</h2>
-        
-        <div className="form-group-checkbox-group">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="newUser"
-            checked={isNewUser}
-            onChange={() => setIsNewUser(!isNewUser)}
-          />
-          <label className="form-check-label" htmlFor="newUser">
-            Are you a new user?
-          </label>
+      <div className="background-blur"></div>
+      <div className="login-card">
+        <div className="icon-container">
+          <img src="images/walmart.png" alt="Walmart Logo" className="walmart-logo" />
         </div>
-        
-        {isNewUser && (
-          <>
-            <div className="form-group">
-              <label htmlFor="firstName">First Name:</label>
+        <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+          <h2>Login</h2>
+          
+          {isNewUser && (
+            <>
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="firstName"
+                  placeholder='First Name'
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="lastName"
+                  placeholder='Last Name'
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
+            </>
+          )}
+          <div className="form-group">
+            <input
+              type="tel"
+              id="phone"
+              placeholder='Phone Number'
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="email"
+              id="email"
+              placeholder='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="login-button">Submit</button>
+          <div className="new-user-toggle">
+            <label className="toggle">
               <input
-                type="text"
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
+                type="checkbox"
+                checked={isNewUser}
+                onChange={() => setIsNewUser(!isNewUser)}
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name:</label>
-              <input
-                type="text"
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-            </div>
-          </>
-        )}
-        <div className="form-group">
-          <label htmlFor="phone">Phone Number:</label>
-          <input
-            type="tel"
-            id="phone"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="login-button">Login</button>
-      </form>
+              <span className="slider round"></span>
+            </label>
+            <span>Are you a new user?</span>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
