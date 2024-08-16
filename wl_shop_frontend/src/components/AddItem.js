@@ -56,7 +56,7 @@ const AddItem = () => {
         name: data.name,
         price: parseFloat(data.price) || 0,
         description: data.description,
-        image_url: data.image_url
+       
       };
     } catch (error) {
       console.error('Error fetching product details:', error);

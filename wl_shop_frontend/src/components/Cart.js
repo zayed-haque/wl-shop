@@ -99,13 +99,13 @@ function Cart() {
             </MDBCard>
           </MDBCol>
           <MDBCol md="4">
-            <MDBCard className="mb-4">
+            <MDBCard className="mb-4 order-summary-card">
               <MDBCardHeader>
                 <MDBTypography tag="h5" className="mb-0">
                   Summary
                 </MDBTypography>
               </MDBCardHeader>
-              <MDBCardBody>
+              <MDBCardBody className="order-summary-body">
                 <OrderSummary items={items} />
               </MDBCardBody>
             </MDBCard>

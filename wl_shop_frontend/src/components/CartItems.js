@@ -13,11 +13,7 @@ function CartItems() {
       ) : (
         items.map(item => (
           <div key={item.id} className="row mb-4">
-            <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
-              <div>
-                <img src={item.image_url} className="w-100" alt={item.name} />
-              </div>
-            </div>
+            
 
             <div className="col-lg-9 col-md-12 mb-4 mb-lg-0">
               <div className="d-flex justify-content-between align-items-center">
@@ -42,6 +38,7 @@ function CartItems() {
                 </p>
               </div>
             </div>
+            <hr></hr>
           </div>
         ))
       )}
