@@ -140,14 +140,17 @@ function ProductList({ show, handleClose, searchTerm }) {
                         className="mt-2"
                         onClick={() => handleAddToCart(product, quantities[product.id] || 1)}
                       >
-                        Add to Cart
+                        <b>Add to Cart  </b>
+                        <img src = "images/add-shopping-cart.svg" alt="Add to Cart" />
                       </Button>
                       <Button
                         className="mt-2 mx-3"
                         variant="info"
+                        style={{ color: 'white' , backgroundColor: '#31AA00'}}
                         onClick={() => handleLocateClick(product)}
                       >
-                        Locate
+                        <b>Locate  </b>
+                        <img src = "images/locate.svg" alt="locate" />
                       </Button>
                     </Card.Body>
                   </Card>
