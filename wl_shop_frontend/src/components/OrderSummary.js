@@ -21,7 +21,7 @@ function OrderSummary({ items }) {
         <span>Total</span>
         <span>${total.toFixed(2)}</span>
       </div>
-      <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
+      <button className="checkout-button" onClick={handleCheckout}>Proceed to Checkout</button>
     </div>
   );
 }

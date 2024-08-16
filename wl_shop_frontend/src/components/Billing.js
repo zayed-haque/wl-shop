@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from './CartContext';
+import { Button } from 'react-bootstrap';
 
 function Billing() {
   const navigate = useNavigate();
@@ -12,9 +13,17 @@ function Billing() {
 
   return (
     <div className="billing-container">
+      <Button
+        style={{ backgroundColor: 'transparent', border: 'none', padding: 0 }}
+        variant="link"
+        onClick={() => navigate('/cart')}
+        className="back-button"
+      >
+        <img src="images/back.svg" alt="back-button" />
+      </Button>
       <h1>Billing Information</h1>
       <p>Total Price: ${totalPrice}</p>
-      {/* Add your billing form here */}
+
       <form>
         <input type="text" placeholder="Full Name" />
         <input type="email" placeholder="Email" />
@@ -27,7 +36,6 @@ function Billing() {
         <button type="button" onClick={handleCheckout}>Complete Purchase</button>
       </form>
       <br></br>
-      <button onClick={() => navigate('/cart')}>Return to Cart</button>
     </div>
   );
 }
