@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './RazorpayStyle.css';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { totalPrice } = location.state || {};
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState('card');
 
   const handlePayment = () => {
@@ -15,6 +17,7 @@ const Checkout = () => {
   const handleCloseModal = () => {
     if (window.confirm("Are you sure you want to close the form?")) {
       setShowModal(false);
+      navigate('/cart');
       console.log("Checkout form closed by the user");
     } else {
       console.log("Complete the Payment");
@@ -28,13 +31,6 @@ const Checkout = () => {
 
   return (
     <div>
-      <button 
-        className="rzp-button" 
-        onClick={handlePayment}
-      >
-        Pay ₹{totalPrice}
-      </button>
-
       {showModal && (
         <div className="rzp-overlay">
           <div className="rzp-modal">

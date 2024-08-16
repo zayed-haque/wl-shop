@@ -12,7 +12,7 @@ function OrderSummary({ items }) {
 
   const handleCheckout = () => {
     console.log('Checkout button clicked'); 
-    navigate('/billing');
+    navigate('/checkout');
   };
 
   return (
