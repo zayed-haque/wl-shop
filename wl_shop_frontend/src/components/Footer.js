@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import ProductList from './ProductList'; 
+import './Footer.css';
 
 function Footer() {
-  const [showProductList, setShowProductList] = useState(false);
+  // const [showProductList, setShowProductList] = useState(false);
   const navigate = useNavigate();
 
-  const handleShowProductList = () => setShowProductList(true);
-  const handleCloseProductList = () => setShowProductList(false);
+  // const handleShowProductList = () => setShowProductList(true);
+  // const handleCloseProductList = () => setShowProductList(false);
 
   const handleScannerClick = () => {
     navigate('/add-item');
@@ -19,13 +20,16 @@ function Footer() {
     navigate('/cart');
   };
 
+  const handleHomeClick = () => {
+    navigate('/home');
+  };
   return (
     <footer className="app-footer bg-light fixed-bottom">
       <div className="container">
         <div className="row text-center">
           <div className="col">
-            <button className="btn btn-light" onClick={handleShowProductList}>
-              <img src='/images/search.png' alt="" style={{ width: '24px', height: '24px' }} />
+            <button className="btn btn-light" onClick={handleHomeClick}>
+              <img src='/images/home-button.svg' alt="" style={{ width: '24px', height: '24px' }} />
               <i className="fas fa-search"></i>
             </button>
           </div>
@@ -43,7 +47,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <ProductList show={showProductList} handleClose={handleCloseProductList} /> 
+      {/* <ProductList show={showProductList} handleClose={handleCloseProductList} />  */}
     </footer>
   );
 }

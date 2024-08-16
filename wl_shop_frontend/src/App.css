@@ -254,8 +254,14 @@ body {
   border-radius: 5px;
 }
 
-.app-footer {
- 
+/* .app-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background-color: #918c8c;
+  border-top: 1px solid #ffffff;
+  border-top-left-radius: 18px ;
+  border-top-right-radius: 18px;
 }
 
 .footer-btn {
@@ -263,4 +269,4 @@ body {
   border: none;
   font-size: 1.5rem;
   color: #0071dc;
-}
+} */

@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { Card, Button, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using react-router-dom for navigation
 
-function ProductList({ show, handleClose }) {
-  const [searchTerm, setSearchTerm] = useState('');
+function ProductList({ show, handleClose, searchTerm }) {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
-
-  const handleSearch = async (event) => {
-    const query = event.target.value;
-    setSearchTerm(query);
-
-    if (query.length > 0) {
+  const storedQuery = searchTerm; // Pre-stored query value
+  useEffect(() => {
+    const fetchProducts = async () => {
       try {
-        const response = await fetch(`https://wl-shop.onrender.com/api/2/products/search?q=${query}`);
+        const response = await fetch(`https://wl-shop.onrender.com/api/2/products/search?q=${storedQuery}`);
         const data = await response.json();
-        setProducts(data.products);
+        if (data.products.length > 0) {
+          setProducts(data.products);
+          setShowAlert(false);
+        } else {
+          setProducts([]);
+          setShowAlert(true);
+        }
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
-    } else {
-      setProducts([]);
-    }
-  };
+    };
+
+    fetchProducts();
+  }, [storedQuery]);
 
   const handleQuantityChange = (productId, quantity) => {
     setQuantities({
@@ -87,7 +90,7 @@ function ProductList({ show, handleClose }) {
       </Modal.Header>
       <Modal.Body>
         <div className='product-list-container'>
-          <input className="search-bar" type="text" placeholder="Search products" onChange={handleSearch} value={searchTerm} />
+          {showAlert && <Alert variant="warning">No products found</Alert>}
           <div>
             {products.length > 0 ? (
               products.map((product) => (
@@ -116,12 +119,8 @@ function ProductList({ show, handleClose }) {
                 </Card>
               ))
             ) : (
-              <p>No products found</p>
+              !showAlert && <p>No products found</p>
             )}
-          </div>
-          <div className=''> 
-            <Button onClick={handleOpenBarcodePage}>Open Barcode Page</Button>
-            <Button className="mx-3 my-3" onClick={handleCartPage}>GotoCart</Button>
           </div>
         </div>
       </Modal.Body>

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Content.css';
+import ProductList from './ProductList';
 
 function Content() {
+  const [showProductList, setShowProductList] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const categories = [
     { name: 'Groceries', image: '/images/grocery.svg', color: '#0081C9' },
     { name: 'Electronics', image: '/images/electronics.svg', color: '#0081C9' },
@@ -11,16 +14,24 @@ function Content() {
     // { name: 'Sports & Outdoors', image: '/images/sports.svg', color: '#0081C9' },
     // { name: 'Sports & Outdoors', image: '/images/sports.svg', color: '#0081C9' },
   ];
+  const handleShowProductList = () => {
+    console.log('Searched query:', searchTerm);
+    setShowProductList(true);
+  };
+  const handleCloseProductList = () => setShowProductList(false);
+  const handleSearchChange = (event) => setSearchTerm(event.target.value);
 
   return (
     <main className="app-content">
       <div className="welcome-box">
-        <h2>Welcome to our first</h2>
-        <h1>WALMART E-CART</h1>
+        <img src="/images/home.png" alt="" />
       </div>
       <div className="search-bar">
-        <input type="text" placeholder="Search Products" />
-        <button><img src="/images/searchbar.svg" alt="Search" /></button>
+        <input type="text" placeholder="Search Products" 
+           value={searchTerm} 
+           onChange={handleSearchChange}
+        />
+        <button onClick={handleShowProductList}><img src="/images/searchbar.svg" alt="Search" /></button>
       </div>
       <div className="categories-section">
         <h3>Product Categories</h3>
@@ -33,6 +44,8 @@ function Content() {
           ))}
         </div>
       </div>
+      <ProductList show={showProductList} handleClose={handleCloseProductList}
+      searchTerm={searchTerm}  /> 
     </main>
   );
 }
