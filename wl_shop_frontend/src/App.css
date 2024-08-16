@@ -254,12 +254,8 @@ body {
   border-radius: 5px;
 }
 
-/* .app-footer {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  background-color: #ffffff;
-  border-top: 1px solid #e0e0e0;
+.app-footer {
+ 
 }
 
 .footer-btn {
@@ -267,4 +263,4 @@ body {
   border: none;
   font-size: 1.5rem;
   color: #0071dc;
-} */
+}
