@@ -29,19 +29,19 @@ function Footer() {
         <div className="row text-center">
           <div className="col">
             <button className="btn btn-light" onClick={handleHomeClick}>
-              <img src='/images/home-button.svg' alt="" style={{ width: '24px', height: '24px' }} />
+              <img src='/images/home-button.svg' alt="" style={{ width: '27px', height: '27px' }} />
               <i className="fas fa-search"></i>
             </button>
           </div>
           <div className="col">
             <button className="btn btn-light" onClick={handleScannerClick}>
-              <img src='/images/barcode-scan.png' alt="" style={{ width: '24px', height: '24px' }} />
+              <img src='/images/barcode-scanner.svg' alt="" style={{ width: '27x', height: '27px' }} />
               <i className="fas fa-barcode"></i>
             </button>
           </div>
           <div className="col">
             <button className="btn btn-light" onClick={handleCartClick}>
-              <img src='/images/grocery-store.png' alt="" style={{ width: '24px', height: '24px' }} />
+              <img src='/images/grocery-store.png' alt="" style={{ width: '27px', height: '27px' }} />
               <i className="fas fa-shopping-cart"></i>
             </button>
           </div>
