@@ -23,7 +23,7 @@ const AddItem = () => {
     if (scanning) {
       scannerRef.current = new Html5QrcodeScanner(
         "reader",
-        { fps: 10, qrbox: 250},
+        { fps: 10, qrbox: 250 },
         false
       );
       scannerRef.current.render(handleBarcodeScanned);
@@ -118,13 +118,20 @@ const AddItem = () => {
           <Card>
             <Card.Body>
               <Card.Title>Manual Input</Card.Title>
-              <Form onSubmit={(e) => { e.preventDefault(); handleManualInput(); } }>
+              <Form onSubmit={(e) => {
+                e.preventDefault();
+                if (!manualBarcode) {
+                  alert('Please enter a barcode');
+                } else {
+                  handleManualInput();
+                }}}>
                 <Form.Group className="mb-3">
                   <Form.Control
-                    type="text"
-                    placeholder="Enter Item Name or Barcode"
+                    type="number"
+                    placeholder="Enter Item Barcode"
                     value={manualBarcode}
-                    onChange={(e) => setManualBarcode(e.target.value)} />
+                    onChange={(e) => setManualBarcode(e.target.value)}
+                    step="1" />
                 </Form.Group>
                 <Button variant="secondary" type="submit" className="w-100">
                   <FaSearch className="me-2" />
@@ -178,7 +185,7 @@ const AddItem = () => {
         </Form>
       </Modal>
     </Container>
-    <Footer />
+      <Footer />
     </>
   );
 };
