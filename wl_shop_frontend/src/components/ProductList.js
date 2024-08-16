@@ -136,22 +136,21 @@ function ProductList({ show, handleClose, searchTerm }) {
                           onChange={(e) => handleQuantityChange(product.id, e.target.value)}
                         />
                       </Form.Group>
-                      <Button
-                        className="mt-2"
+                      <span className='product'><Button
+                        className="atc mt-2"
                         onClick={() => handleAddToCart(product, quantities[product.id] || 1)}
                       >
-                        <b>Add to Cart  </b>
-                        <img src = "images/add-shopping-cart.svg" alt="Add to Cart" />
-                      </Button>
-                      <Button
-                        className="mt-2 mx-3"
+                        <img src = "images/add-shopping-cart.svg" alt="Add to Cart" style={{ width: '27x', height: '27px'}}/>
+                      </Button></span>
+                      <span className='product'><Button
+                        className="atc mt-2 mx-3"
                         variant="info"
                         style={{ color: 'white' , backgroundColor: '#31AA00'}}
                         onClick={() => handleLocateClick(product)}
                       >
-                        <b>Locate  </b>
-                        <img src = "images/locate.svg" alt="locate" />
-                      </Button>
+                        <img src = "images/locate.svg" alt="locate" style={{ width: '27x', height: '27px'}}/>
+                      </Button></span>
+                      
                     </Card.Body>
                   </Card>
                 ))

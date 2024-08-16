@@ -6,7 +6,7 @@
   .row {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   
   .col-lg-3, .col-lg-9, .col-md-12 {
@@ -58,6 +58,14 @@
     margin-bottom: 1.5rem;
   }
   
+  .remove-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
   /* Responsive Design */
   @media (max-width: 600px) {
     .quantity-input {
@@ -69,8 +77,8 @@
       align-items: flex-start;
     }
   
-    .btn {
-      width: 100%;
+    .btn1 {
+      width: auto;
       margin-bottom: 0.5rem;
     }
   
@@ -80,5 +88,6 @@
   
     .text-md-center {
       text-align: center;
+      padding-right: 10px;
     }
   }

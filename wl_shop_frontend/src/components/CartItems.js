@@ -13,11 +13,7 @@ function CartItems() {
       ) : (
         items.map(item => (
           <div key={item.id} className="row mb-4">
-            <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
-              <div>
-                <img src={item.image_url} className="w-100" alt={item.name} />
-              </div>
-            </div>
+            
 
             <div className="col-lg-9 col-md-12 mb-4 mb-lg-0">
               <div className="d-flex justify-content-between align-items-center">
@@ -33,14 +29,16 @@ function CartItems() {
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mt-2">
-                <button className="btn btn-primary btn-sm me-1 mb-2" data-bs-toggle="tooltip" title="Remove item" onClick={() => removeItem(item.id)}>
+                <button className="btn1 btn-primary btn-sm me-1 mb-2" data-bs-toggle="tooltip" title="Remove item" onClick={() => removeItem(item.id)}>
+                <img src="/images/delete.svg" alt="" style={{ width: '24px', height: '24px' }}/>
                   <i className="fas fa-trash"></i>
                 </button>
                 <p className="text-start text-md-center">
-                  <strong>${item.price.toFixed(2)}</strong>
+                  <strong>Price: ${item.price.toFixed(2)}</strong>
                 </p>
               </div>
             </div>
+            <hr></hr>
           </div>
         ))
       )}

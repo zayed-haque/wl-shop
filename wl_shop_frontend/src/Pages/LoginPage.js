@@ -64,7 +64,7 @@ const LoginPage = () => {
       <div className="background-blur"></div>
       <div className="login-card">
         <div className="icon-container">
-          <img src="images/walmart.png" alt="Walmart Logo" className="walmart-logo" />
+          <img src="images/login.svg" alt="Walmart Logo" className="walmart-logo" />
         </div>
         <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
           <h2>Login</h2>
