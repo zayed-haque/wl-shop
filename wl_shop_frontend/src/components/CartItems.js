@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { CartContext } from './CartContext';
+<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css';
+=======
+>>>>>>> 732d2b8e (Removed wrong version)
 import './CartItems.css';
 
 function CartItems() {
@@ -8,6 +11,7 @@ function CartItems() {
 
   return (
     <div className="cart-items">
+<<<<<<< HEAD
       {items.length === 0 ? (
         <p style={{ textAlign: 'center' }}>Your cart is empty</p>
       ) : (
@@ -42,6 +46,56 @@ function CartItems() {
           </div>
         ))
       )}
+=======
+      <table>
+        <thead>
+          <tr>
+            <th>PRODUCT</th>
+            <th>PRICE</th>
+            <th>QTY</th>
+            <th>TOTAL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.length === 0 ? (
+            <tr>
+              <td colSpan="5" style={{ textAlign: 'center' }}>
+                Your cart is empty 
+              </td>
+            </tr>
+          ) : (
+            items.map(item => (
+              <tr key={item.id} className="cart-item">
+                <td className="product-column">
+                  <div className="product-info">
+                    <img
+                      src={item.image_url}
+                      alt={item.name}
+                      className="product-image"
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                </td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                    min="1"
+                  />
+                </td>
+                <td>${(item.price * item.quantity).toFixed(2)}</td>
+                <td>
+                  <button onClick={() => removeItem(item.id)}>x</button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+>>>>>>> 732d2b8e (Removed wrong version)
     </div>
   );
 }

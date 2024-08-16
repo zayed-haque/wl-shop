@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import { CartContext } from './CartContext';
+<<<<<<< HEAD
 import {
   MDBBtn,
   MDBCard,
@@ -11,6 +12,9 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
+=======
+import { Button } from 'react-bootstrap';
+>>>>>>> 732d2b8e (Removed wrong version)
 import CartItems from './CartItems';
 import OrderSummary from './OrderSummary';
 import AddItem from './AddItem';
