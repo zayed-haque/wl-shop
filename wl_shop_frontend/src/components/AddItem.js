@@ -93,9 +93,6 @@ const AddItem = () => {
   return (
     <><Container className="add-item-container">
       <nav>
-        <Button variant="link" onClick={() => navigate('/home')} className="back-button">
-          <img src="images/back.svg" alt="back-button" />
-        </Button>
         <span><h1 className="text-center mb-4">Add Item to Cart</h1></span>
       </nav>
       <Row className="justify-content-center">
