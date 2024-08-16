@@ -1,10 +1,9 @@
-from flask import Flask, Blueprint
-from flask_sqlalchemy import SQLAlchemy
+from flask import Blueprint, Flask
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
-from flask_cors import CORS
-
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -24,22 +23,22 @@ def create_app():
     jwt.init_app(app)
     CORS(app)
 
-    from wl_shop_service.routes.product_routes import product_bp
-    from wl_shop_service.routes.cart_routes import cart_bp
     from wl_shop_service.routes.auth_routes import auth_bp
-    from wl_shop_service.routes.user_routes import user_bp
+    from wl_shop_service.routes.cart_routes import cart_bp
     from wl_shop_service.routes.order_routes import order_bp
+    from wl_shop_service.routes.product_routes import product_bp
     from wl_shop_service.routes.store_routes import store_bp
+    from wl_shop_service.routes.user_routes import user_bp
 
     # Create a parent blueprint for store-specific routes
-    store_specific = Blueprint('store_specific', __name__)
+    store_specific = Blueprint("store_specific", __name__)
 
     # Register store-specific blueprints
-    store_specific.register_blueprint(product_bp, url_prefix='/<int:store_id>/products')
+    store_specific.register_blueprint(product_bp, url_prefix="/<int:store_id>/products")
 
     # Register blueprints
-    app.register_blueprint(cart_bp, url_prefix='/api')
-    app.register_blueprint(order_bp, url_prefix='/api')
+    app.register_blueprint(cart_bp, url_prefix="/api")
+    app.register_blueprint(order_bp, url_prefix="/api")
     app.register_blueprint(user_bp, url_prefix="/api/users")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(store_bp, url_prefix="/api/stores")

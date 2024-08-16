@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify
-from wl_shop_service.services.user_service import UserService
-from wl_shop_service.schemas.user_schema import user_schema
+from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
+
+from wl_shop_service.schemas.user_schema import user_schema
+from wl_shop_service.services.user_service import UserService
 
 user_bp = Blueprint("user", __name__)
 

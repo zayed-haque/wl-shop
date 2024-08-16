@@ -1,10 +1,13 @@
-from wl_shop_service import db
 from datetime import datetime
+
+from sqlalchemy.dialects.postgresql import BIGINT
+
+from wl_shop_service import db
 
 
 class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    store_id = db.Column(db.Integer, db.ForeignKey('store.id'), nullable=False)
+    id = db.Column(BIGINT, primary_key=True)
+    store_id = db.Column(db.Integer, db.ForeignKey("store.id"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Float, nullable=False)
@@ -22,7 +25,7 @@ class Product(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    store_id = db.Column(db.Integer, db.ForeignKey('store.id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey("store.id"), nullable=False)
     products = db.relationship("Product", backref="category", lazy=True)
 
     def __repr__(self):

@@ -1,5 +1,6 @@
-from flask_jwt_extended import create_access_token
 from datetime import timedelta
+
+from flask_jwt_extended import create_access_token
 
 
 def generate_test_token(user_id):

@@ -1,6 +1,7 @@
-from wl_shop_service import ma
-from wl_shop_service.models.store import Store, StoreInventory, StorePlan
 from marshmallow import fields
+from wl_shop_service.models.store import Store, StoreInventory, StorePlan
+
+from wl_shop_service import ma
 
 
 class StorePlanSchema(ma.SQLAlchemyAutoSchema):
@@ -14,7 +15,7 @@ class StoreInventorySchema(ma.SQLAlchemyAutoSchema):
         model = StoreInventory
         include_fk = True
 
-    product = fields.Nested('ProductSchema', only=('id', 'name', 'price'))
+    product = fields.Nested("ProductSchema", only=("id", "name", "price"))
 
 
 class StoreSchema(ma.SQLAlchemyAutoSchema):

@@ -1,7 +1,8 @@
-from wl_shop_service import ma
-from wl_shop_service.models.order import Order
-from wl_shop_service.schemas.cart_schema import CartItemSchema
 from marshmallow import fields
+from wl_shop_service.models.order import Order
+
+from wl_shop_service import ma
+from wl_shop_service.schemas.cart_schema import CartItemSchema
 
 
 class OrderSchema(ma.SQLAlchemyAutoSchema):

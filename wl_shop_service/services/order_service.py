@@ -1,6 +1,7 @@
-from wl_shop_service import db
-from wl_shop_service.models.order import Order
 from wl_shop_service.models.cart import Cart, CartItem
+from wl_shop_service.models.order import Order
+
+from wl_shop_service import db
 
 
 class OrderService:
@@ -25,7 +26,7 @@ class OrderService:
                 order_id=order.id,
                 product_id=cart_item.product_id,
                 quantity=cart_item.quantity,
-                price=cart_item.price
+                price=cart_item.price,
             )
             db.session.add(order_item)
 

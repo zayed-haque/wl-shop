@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+
 from wl_shop_service.utils.auth import generate_test_token
 
 auth_bp = Blueprint("auth", __name__)

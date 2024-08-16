@@ -1,5 +1,6 @@
-from wl_shop_service import ma
 from wl_shop_service.models.user import User
+
+from wl_shop_service import ma
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):

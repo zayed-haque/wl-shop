@@ -1,6 +1,7 @@
-from wl_shop_service import ma
-from wl_shop_service.models.cart import Cart, CartItem
 from marshmallow import fields
+from wl_shop_service.models.cart import Cart, CartItem
+
+from wl_shop_service import ma
 
 
 class CartItemSchema(ma.SQLAlchemyAutoSchema):

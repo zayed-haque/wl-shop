@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
-from wl_shop_service.services.cart_service import CartService
-from wl_shop_service.schemas.cart_schema import cart_schema
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy.orm.exc import NoResultFound
+
+from wl_shop_service.schemas.cart_schema import cart_schema
+from wl_shop_service.services.cart_service import CartService
 
 cart_bp = Blueprint("cart", __name__)
 

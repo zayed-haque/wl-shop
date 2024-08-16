@@ -1,7 +1,6 @@
-from wl_shop_service import db
 from wl_shop_service.models.store import Store, StoreInventory, StorePlan
-from wl_shop_service.models.product import Product
-from sqlalchemy.exc import IntegrityError
+
+from wl_shop_service import db
 
 
 class StoreService:
@@ -40,16 +39,22 @@ class StoreService:
 
     @staticmethod
     def get_item_quantity(store_id, product_id):
-        inventory = StoreInventory.query.filter_by(store_id=store_id, product_id=product_id).first()
+        inventory = StoreInventory.query.filter_by(
+            store_id=store_id, product_id=product_id
+        ).first()
         if not inventory:
             raise ValueError("Product not found in store inventory")
         return inventory.quantity
 
     @staticmethod
     def update_item_quantity(store_id, product_id, quantity):
-        inventory = StoreInventory.query.filter_by(store_id=store_id, product_id=product_id).first()
+        inventory = StoreInventory.query.filter_by(
+            store_id=store_id, product_id=product_id
+        ).first()
         if not inventory:
-            inventory = StoreInventory(store_id=store_id, product_id=product_id, quantity=quantity)
+            inventory = StoreInventory(
+                store_id=store_id, product_id=product_id, quantity=quantity
+            )
             db.session.add(inventory)
         else:
             inventory.quantity = quantity

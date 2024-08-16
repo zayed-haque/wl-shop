@@ -1,7 +1,9 @@
-from wl_shop_service import db
-from wl_shop_service.models.user import User
-from sqlalchemy.exc import IntegrityError
 import re
+
+from sqlalchemy.exc import IntegrityError
+from wl_shop_service.models.user import User
+
+from wl_shop_service import db
 
 
 class UserService:
