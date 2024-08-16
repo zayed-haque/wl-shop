@@ -166,6 +166,7 @@ def create_products_and_inventory(store_id):
 
     db.session.commit()
 
+
 def main():
     app = create_app()
     with app.app_context():
@@ -179,6 +180,7 @@ def main():
             print(f"Products and inventory created for {store.name}")
         db.session.commit()
         print("All changes committed to the database")
+
 
 if __name__ == "__main__":
     try:
