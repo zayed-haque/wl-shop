@@ -7,7 +7,7 @@ import random
 
 def create_stores():
     stores = [
-        Store(name="Walmart Store Chennai", address="Velachery"),
+        Store(name="Walmart Store Chennai 11", address="Velachery"),
     ]
     for store in stores:
         existing_store = Store.query.filter_by(name=store.name).first()
@@ -85,12 +85,12 @@ def create_products_and_inventory(store_id):
             "image_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTCFKHs6Z6LmoDr9UgMgqY2ssMqdHgIFrSY8bzt-W4-jM-t3eIm_ctp7VVaixUfkf-vgpFLMGSbJWXQPKdFe-CAqHVQ2TkT7PcIRNsb1WccHk0hMH4rD-e3ndI",
         },
         {
-            "id": 8901207001888,
-            "name": "Honitus Serup",
-            "description": "Cough serup",
+            "id": 42204244,
+            "name": "Nivea Creme",
+            "description": "Creame for face and body",
             "price": 2.99,
             "category": "Groceries",
-            "image_url": "https://static.meds.cvpharmacy.in/wp-content/uploads/2024/06/7322_30f3d4a1-fe56-48aa-a394-9b3f975b5551_30f3d4a1-fe56-48aa-a394-9b3f975b5551-1.jpg",
+            "image_url": "https://12c3n1dm.cdn.imgeng.in//media/catalog/product/cache/29abecc52197fdaac7600ad7e01ae160/New_Product/Nivea_Cream_60ml_I67066_01.jpg",
         },
         # Home & Kitchen
         {
@@ -116,7 +116,7 @@ def create_products_and_inventory(store_id):
         },
         # Clothing
         {
-            "id": 12345678,
+            "id": 1234567822,
             "name": "Men's T-Shirt",
             "description": "Cotton crew neck t-shirt",
             "price": 9.99,
