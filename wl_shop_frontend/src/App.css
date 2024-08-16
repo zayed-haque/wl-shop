@@ -204,25 +204,25 @@ body {
   padding: 0;
 }
 
-.app-header {
+/* .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
   background-color: #0071dc;
   color: white;
-}
+} */
 
-.walmart-icon, .user-icon {
-  width: 30px;
-  height: 30px;
+/* .walmart-icon, .user-icon {
+  width: auto;
+  height: auto;
   background-color: white;
   color: #0071dc;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-}
+} */
 
 .app-content {
   flex-grow: 1;
@@ -254,11 +254,11 @@ body {
   border-radius: 5px;
 }
 
-.app-footer {
+/* .app-footer {
   display: flex;
   justify-content: space-around;
   padding: 10px;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -267,4 +267,4 @@ body {
   border: none;
   font-size: 1.5rem;
   color: #0071dc;
-}
+} */

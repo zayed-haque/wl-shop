@@ -11,7 +11,7 @@ function Header() {
 
           <div>
           <button className="icon-button user-icon">
-            <img src="images/profile.svg" alt="User" />
+            <img src="images/profile-user.svg" alt="User" />
           </button>
         </div>
       </div>

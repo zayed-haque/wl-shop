@@ -6,6 +6,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  transition: border 0.3s ease; /* Smooth transition for border */
 }
 
 .footer-content {
@@ -24,14 +25,38 @@
   cursor: pointer;
   color: #333;
   font-size: 12px;
+  transition: transform 0.3s ease; /* Smooth transition for icon scale */
 }
 
 .footer-button img {
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
+  transition: transform 0.3s ease; /* Smooth transition for icon scale */
 }
 
 .footer-button span {
   text-align: center;
+}
+
+/* Hover effect */
+.footer-button:hover img {
+  transform: scale(1.3); /* Scale icon to 130% of its size */
+}
+
+.footer-button:hover {
+  /* Add additional styles to extend the footer border around the button */
+  position: relative;
+}
+
+.footer-button:hover::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px solid #e0e0e0; /* Border color */
+  border-radius: 5px; /* Optional: rounded corners */
+  z-index: -1; /* Place border behind button */
 }
