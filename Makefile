@@ -38,11 +38,11 @@ db-shell:
 
 # Install frontend dependencies
 frontend-install:
-	cd wl_shop_frontend && npm install
+	cd wl_shop_frontend && npm install -i
 
 # Run frontend development server
 frontend:
-	cd wl_shop_frontend && npm start
+	cd wl_shop_frontend && npm install -i --legacy-peer-deps && npm start
 
 # Build frontend for production
 frontend-build:
