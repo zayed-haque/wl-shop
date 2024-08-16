@@ -8,6 +8,7 @@ import AddItem from './AddItem';
 import Billing from './Billing';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Cart.css';
+import Footer from './Footer';
 
 function Cart() {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ function Cart() {
   };
 
   return (
-    <div className="cart-container">
+    <><div className="cart-container">
       <Button variant="link" onClick={() => navigate('/home')} className="back-button">
         <img src="images/back.svg" alt="back-button" />
       </Button>
@@ -110,17 +111,18 @@ function Cart() {
         capture="environment"
         id="cameraInput"
         style={{ display: 'none' }}
-        onChange={handleCapture}
-      />
+        onChange={handleCapture} />
       <CartItems items={items} updateQuantity={updateQuantity} removeItem={removeItem} />
       <div className="cart-summary">
         <OrderSummary items={items} shippingCost={shippingCost} />
       </div>
       <Routes>
         <Route path="/add-item" element={<AddItem />} />
-        <Route path="/billing" element={<Billing/>} />
+        <Route path="/billing" element={<Billing />} />
       </Routes>
     </div>
+    <Footer />
+    </>
   );
 }
 

@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { FaBarcode, FaSearch } from 'react-icons/fa';
 import './AddItem.css';
+import Footer from './Footer';
 
 const AddItem = () => {
   const { addItemToCart } = useContext(CartContext);
@@ -90,7 +91,7 @@ const AddItem = () => {
   };
 
   return (
-    <Container className="add-item-container">
+    <><Container className="add-item-container">
       <nav>
         <Button variant="link" onClick={() => navigate('/home')} className="back-button">
           <img src="images/back.svg" alt="back-button" />
@@ -103,8 +104,8 @@ const AddItem = () => {
             <Card.Body>
               <Card.Title>Scan Barcode</Card.Title>
               <div id="reader" className="mb-3"></div>
-              <Button 
-                variant="primary" 
+              <Button
+                variant="primary"
                 onClick={() => setScanning(!scanning)}
                 className="w-100"
               >
@@ -117,14 +118,13 @@ const AddItem = () => {
           <Card>
             <Card.Body>
               <Card.Title>Manual Input</Card.Title>
-              <Form onSubmit={(e) => { e.preventDefault(); handleManualInput(); }}>
+              <Form onSubmit={(e) => { e.preventDefault(); handleManualInput(); } }>
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="text"
                     placeholder="Enter Item Name or Barcode"
                     value={manualBarcode}
-                    onChange={(e) => setManualBarcode(e.target.value)}
-                  />
+                    onChange={(e) => setManualBarcode(e.target.value)} />
                 </Form.Group>
                 <Button variant="secondary" type="submit" className="w-100">
                   <FaSearch className="me-2" />
@@ -153,8 +153,7 @@ const AddItem = () => {
               name="name"
               value={itemDetails.name || ''}
               onChange={handleInputChange}
-              readOnly
-            />
+              readOnly />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
@@ -163,8 +162,7 @@ const AddItem = () => {
               name="price"
               value={itemDetails.price || ''}
               onChange={handleInputChange}
-              readOnly
-            />
+              readOnly />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Quantity</Form.Label>
@@ -173,14 +171,15 @@ const AddItem = () => {
               name="quantity"
               value={itemDetails.quantity || 1}
               onChange={handleInputChange}
-              min="1"
-            />
+              min="1" />
           </Form.Group>
           <Button variant="primary" onClick={handleAddItem} className="me-2">Add to Cart</Button>
           <Button variant="secondary" onClick={() => setIsModalOpen(false)}>Cancel</Button>
         </Form>
       </Modal>
     </Container>
+    <Footer />
+    </>
   );
 };
 
