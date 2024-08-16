@@ -1,7 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import { CartContext } from './CartContext';
-import { Button } from 'react-bootstrap'; // Add this line
+import {
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardHeader,
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBTypography,
+} from "mdb-react-ui-kit";
 import CartItems from './CartItems';
 import OrderSummary from './OrderSummary';
 import AddItem from './AddItem';
@@ -12,10 +21,8 @@ import Footer from './Footer';
 
 function Cart() {
   const navigate = useNavigate();
-  const { items, addItemToCart, setItems } = useContext(CartContext);
+  const { items, setItems } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  const [shippingCost, setShippingCost] = useState(0);
 
   const fetchCartData = async () => {
     const token = localStorage.getItem('accessToken');
@@ -38,14 +45,8 @@ function Cart() {
       }
 
       const data = await response.json();
-      console.log('Fetched cart data:', data); // Log the entire response
+      console.log('Fetched cart data:', data);
 
-      // Check if the items array contains the product name
-      if (data.items && data.items.length > 0) {
-        data.items.forEach(item => {
-          console.log('Product name:', item.name); // Log each product name
-        });
-      }
       const formattedItems = data.items.map(item => ({
         id: item.id,
         name: item.product.name,
@@ -54,7 +55,6 @@ function Cart() {
       }));
 
       setItems(formattedItems);
-      console.log(data.items); // Update the CartContext with fetched data
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
@@ -72,11 +72,6 @@ function Cart() {
     calculateTotalPrice();
   }, [items]);
 
-  // const handleCartPage = () => {
-  //   fetchCartData();
-  //   navigate('/cart');
-  // };
-
   const updateQuantity = (id, newQuantity) => {
     setItems(items.map(item => 
       item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
@@ -87,42 +82,42 @@ function Cart() {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const handleCapture = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log('Captured image:', file);
-    }
-  };
-
-  const handleBilling = () => {
-    navigate('/billing', { state: { totalPrice } });
-  };
-
   return (
-    <><div className="cart-container">
-      <Button variant="link" onClick={() => navigate('/home')} className="back-button">
-        <img src="images/back.svg" alt="back-button" />
-      </Button>
-      <h1>My Cart</h1>
-      <button className="add-item-button" onClick={() => navigate('/add-item')}>Add Item</button>
-      <input
-        type="file"
-        accept="image/*"
-        capture="environment"
-        id="cameraInput"
-        style={{ display: 'none' }}
-        onChange={handleCapture} />
-      <CartItems items={items} updateQuantity={updateQuantity} removeItem={removeItem} />
-      <div className="cart-summary">
-        <OrderSummary items={items} shippingCost={shippingCost} />
-      </div>
+    <section className="h-100 gradient-custom">
+      <MDBContainer className="py-5 h-100">
+        <MDBRow className="justify-content-center my-4">
+          <MDBCol md="8">
+            <MDBCard className="mb-4">
+              <MDBCardHeader className="py-3">
+                <MDBTypography tag="h5" className="mb-0">
+                  Cart - {items.length} items
+                </MDBTypography>
+              </MDBCardHeader>
+              <MDBCardBody>
+                <CartItems items={items} updateQuantity={updateQuantity} removeItem={removeItem} />
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol md="4">
+            <MDBCard className="mb-4">
+              <MDBCardHeader>
+                <MDBTypography tag="h5" className="mb-0">
+                  Summary
+                </MDBTypography>
+              </MDBCardHeader>
+              <MDBCardBody>
+                <OrderSummary items={items} />
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
       <Routes>
         <Route path="/add-item" element={<AddItem />} />
         <Route path="/billing" element={<Billing />} />
       </Routes>
-    </div>
-    <Footer />
-    </>
+      <Footer />
+    </section>
   );
 }
 

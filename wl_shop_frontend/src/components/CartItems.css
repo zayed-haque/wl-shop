@@ -1,0 +1,84 @@
+/* General Styles */
+.cart-items {
+    padding: 1rem;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  
+  .col-lg-3, .col-lg-9, .col-md-12 {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+  
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Button Styles */
+  .btn {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .btn:active {
+    transform: none !important;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  /* Quantity Input Styles */
+  .quantity-input {
+    width: 50px;
+    text-align: center;
+    margin: 0 0.5rem;
+  }
+  
+  /* Flexbox Utility */
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .quantity-input {
+      width: 40px;
+    }
+  
+    .d-flex {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    .text-start {
+      text-align: left;
+    }
+  
+    .text-md-center {
+      text-align: center;
+    }
+  }
