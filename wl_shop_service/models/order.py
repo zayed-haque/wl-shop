@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from wl_shop_service import db
-
+from wl_shop_service.models.cart import CartItem
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,6 +1,7 @@
-from datetime import datetime
-
 from wl_shop_service import db
+from datetime import datetime
+from wl_shop_service.models.user import User
+from wl_shop_service.models.product import Product
 
 
 class Cart(db.Model):
