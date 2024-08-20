@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import StoreMap from './StoreMap'; // Import the StoreMap component
+import { AuthContext } from '../components/AuthContext.js';
 
 function ProductList({ show, handleClose, searchTerm }) {
+  const { accessToken } = useContext(AuthContext);
+  const token = accessToken;
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [showAlert, setShowAlert] = useState(false);
@@ -40,19 +43,13 @@ function ProductList({ show, handleClose, searchTerm }) {
     });
   };
 
-  const getAccessToken = () => {
-    const token = localStorage.getItem('accessToken');
-    console.log('Access token retrieved:', token);
-    return token;
-  };
+
 
   const handleAddToCart = async (product, quantity) => {
     const payload = {
       product_id: product.id,
       quantity: quantity,
     };
-
-    const token = getAccessToken();
     const headers = {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',

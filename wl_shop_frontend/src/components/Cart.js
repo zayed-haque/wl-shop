@@ -9,16 +9,19 @@ import Billing from './Billing';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Cart.css';
 import Footer from './Footer';
+import { AuthContext } from '../components/AuthContext.js';
 
 function Cart() {
   const navigate = useNavigate();
   const { items, addItemToCart, setItems } = useContext(CartContext);
+  const { accessToken } = useContext(AuthContext);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [shippingCost, setShippingCost] = useState(0);
+  const token = accessToken;
 
   const fetchCartData = async () => {
-    const token = localStorage.getItem('accessToken');
+    
     const headers = {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',

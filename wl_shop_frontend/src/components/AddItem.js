@@ -8,8 +8,12 @@ import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { FaBarcode, FaSearch } from 'react-icons/fa';
 import './AddItem.css';
 import Footer from './Footer';
+import { AuthContext } from '../components/AuthContext.js';
 
+Modal.setAppElement('#root');
 const AddItem = () => {
+  const {accessToken } = useContext(AuthContext);
+  const token = accessToken;
   const { addItemToCart } = useContext(CartContext);
   const [scanning, setScanning] = useState(false);
   const [barcode, setBarcode] = useState(null);
@@ -47,12 +51,15 @@ const AddItem = () => {
 
   const fetchProductDetails = async (barcode) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/products/${barcode}`);
+      const response = await fetch(`https://wl-shop.onrender.com/api/4/products/${barcode}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      console.log(data);
+      
       return {
+        id: data.id,
         name: data.name,
         price: parseFloat(data.price) || 0,
         description: data.description,
@@ -69,14 +76,44 @@ const AddItem = () => {
     setItemDetails({ ...itemDetails, [name]: name === 'price' ? parseFloat(value) || 0 : value });
   };
 
-  const handleAddItem = () => {
-    if (addItemToCart && itemDetails.name && itemDetails.price >= 0) {
-      addItemToCart(itemDetails);
-      setIsModalOpen(false);
-      navigate('/cart');
-    } else {
-      alert('Invalid item details. Please ensure name and price are valid.');
+  const handleAddItem = async () => {
+    const payload = {
+      product_id: itemDetails.id,
+      quantity: itemDetails.quantity,
+    };
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    console.log('Token:', token);
+
+    try {
+      console.log(payload)
+      const response = await fetch('https://wl-shop.onrender.com/api/cart/add', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Response status:', response.status);
+        console.error('Response body:', errorText);
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Item added to cart:', data);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
+    // if (addItemToCart && itemDetails.name && itemDetails.price >= 0) {
+    //   addItemToCart(itemDetails);
+    //   setIsModalOpen(false);
+    //   // navigate('/cart');
+    // } else {
+    //   alert('Invalid item details. Please ensure name and price are valid.');
+    // }
   };
 
   const handleManualInput = async () => {
@@ -151,7 +188,7 @@ const AddItem = () => {
         overlayClassName="item-details-overlay"
       >
         <h2>Item Details</h2>
-        <img src={itemDetails.image_url} alt={itemDetails.name} className="item-image" />
+        <img src={itemDetails.image_url} alt={itemDetails.name} className="item-image" style={{height:'100px', width:"100px"}}/>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Item Name</Form.Label>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Make sure to import the CSS file
+import { AuthContext } from '../components/AuthContext.js';
 
 const LoginPage = () => {
+  const { setAccessToken } = useContext(AuthContext);
   const [isNewUser, setIsNewUser] = useState(true);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -44,7 +46,7 @@ const LoginPage = () => {
 
         // Store the access token in local storage
         localStorage.setItem('accessToken', data.access_token);
-        const access_token =localStorage.getItem('accessToken');
+        setAccessToken(data.access_token);
         console.log('Access token set:', localStorage.getItem('accessToken')); 
         console.log('New User Login:', firstName, lastName, email, phoneNumber);
         navigate('/home');
@@ -53,9 +55,43 @@ const LoginPage = () => {
         alert('An error occurred while registering the user.');
       }
     } else {
-      // Handle existing user login
-      console.log('Existing User Login:', email);
-      navigate('/home');
+      try {
+        const response = await fetch(`https://wl-shop.onrender.com/api/users/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Failed to login user:', errorText);
+          alert('Failed to login user.');
+          return;
+        }
+  
+        const data = await response.json();
+        console.log('Response Status:', response.status);
+        console.log('Response Data:', data);
+  
+        if (data.message !== 'Login successful') {
+          alert('Login failed. Please check your credentials.');
+          return;
+        }
+  
+        // Store the access token in local storage
+        localStorage.setItem('accessToken', data.access_token);
+        setAccessToken(data.access_token);
+        console.log('Access token set:', localStorage.getItem('accessToken')); 
+        console.log('Existing User Login:', data.user.first_name, data.user.last_name, data.user.email, data.user.phone_number);
+        navigate('/home');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while logging in the user.');
+      }
     }
   };
 

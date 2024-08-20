@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CartProvider } from '../components/CartContext';
 
 
+
 const ProductList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [products, setProducts] = useState([
@@ -13,6 +14,7 @@ const ProductList = () => {
     ]);
 
     const navigate = useNavigate();
+    
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
