@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_raw_jwt, set_access_cookies, get_jwt_identity
+import datetime
 
 from wl_shop_service.schemas.user_schema import user_schema
 from wl_shop_service.services.user_service import UserService
@@ -51,3 +52,16 @@ def login_user():
         )
     else:
         return jsonify({"message": "Invalid email"}), 401
+    
+# @user_bp.route
+# def refresh_jwt_if_near_expiring(response):
+#     expires_time = get_raw_jwt().get('exp')
+#     if not expires_time:
+#         return response
+    
+#     target_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+#     if (target_time > expires_time):
+#         access_token = create_access_token(identity=get_jwt_identity())
+#         set_access_cookies(response, access_token)
+
+#     return response

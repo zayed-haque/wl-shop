@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -16,6 +17,8 @@ def create_app():
     app.url_map.strict_slashes = False
 
     app.config.from_object("config.Config")
+    #app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+    #app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 
     db.init_app(app)
     ma.init_app(app)
